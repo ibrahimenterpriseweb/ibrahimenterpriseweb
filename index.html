@@ -139,74 +139,124 @@
 
   <main class="flex-grow">
     
-    <!-- SECTION B: Hero (Two-column desktop layout) -->
-    <section class="relative bg-gradient-to-b from-white via-emerald-50/30 to-white pt-10 pb-16 lg:py-20 border-b border-slate-100 overflow-hidden">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- SECTION B: Hero with Full Background Video -->
+    <section class="relative isolate min-h-[580px] lg:min-h-[660px] flex items-center pt-12 pb-16 lg:py-24 border-b border-slate-900 overflow-hidden bg-slate-950">
+      <!-- Background Video & Atmospheric Scrim -->
+      <div class="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+        <video 
+          class="w-full h-full object-cover object-center filter brightness-[0.5] contrast-[1.15]" 
+          autoplay 
+          muted 
+          loop 
+          playsinline 
+          preload="auto"
+          poster="assets/images/hero-export.jpg"
+        >
+          <source src="https://res.cloudinary.com/dun5uome/video/upload/v1791982321/gemini_generated_video_dbcc8f35_gwr_video_mvp.mp4" type="video/mp4">
+        </video>
+        <!-- Cinematic gradient overlays for guaranteed contrast and rich aesthetic depth -->
+        <div class="absolute inset-0 bg-gradient-to-r from-slate-950/95 via-slate-950/80 to-slate-900/60"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-slate-950/70"></div>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           
           <!-- Hero Left Column -->
-          <div class="lg:col-span-6 space-y-6">
-            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-100/80 border border-emerald-200 text-emerald-800 text-xs font-bold tracking-wider uppercase">
-              <span class="w-2 h-2 rounded-full bg-[#0fa14a] animate-pulse"></span>
+          <div class="lg:col-span-7 space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold tracking-wider uppercase backdrop-blur-md">
+              <span class="w-2 h-2 rounded-full bg-[#0fa14a] shadow-[0_0_8px_#0fa14a] animate-pulse"></span>
               International Food Commodity Trading
             </div>
 
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#231f20] leading-[1.15] tracking-tight">
-              Connecting Quality Food Commodities to <span class="text-[#0fa14a]">Global Markets</span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white leading-[1.12] tracking-tight">
+              Connecting Quality Food Commodities to <span class="text-emerald-400">Global Markets</span>
             </h1>
 
-            <p class="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
-              Importing Hing from Afghanistan and exporting a diverse portfolio of food commodities to international markets.
+            <p class="text-base sm:text-lg text-slate-200 leading-relaxed max-w-xl font-normal">
+              Importing pure Hing from Afghanistan and exporting a premium portfolio of agricultural commodities across international markets.
             </p>
 
             <div class="flex flex-wrap items-center gap-4 pt-2">
-              <a href="products.html" class="btn-primary">
+              <a href="products.html" class="btn-primary shadow-lg shadow-emerald-600/30">
                 <span>Explore Products</span>
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
               </a>
-              <a href="contact.html" class="btn-secondary">
-                Request a Quote
+              <a href="contact.html" class="btn-hero-glass">
+                <span>Request a Quote</span>
               </a>
             </div>
 
             <!-- Operational Highlights Mini Grid -->
-            <div class="pt-6 border-t border-slate-200/70 grid grid-cols-3 gap-4 text-left">
+            <div class="pt-6 border-t border-white/15 grid grid-cols-3 gap-4 text-left">
               <div>
-                <p class="text-2xl font-bold text-[#0fa14a]">20 MT</p>
-                <p class="text-xs text-slate-500 font-medium">Monthly Hing Imports</p>
+                <p class="text-2xl sm:text-3xl font-bold text-emerald-400">20 MT</p>
+                <p class="text-xs text-slate-300 font-medium">Monthly Hing Imports</p>
               </div>
               <div>
-                <p class="text-2xl font-bold text-slate-900">~100</p>
-                <p class="text-xs text-slate-500 font-medium">Export Containers/Mo</p>
+                <p class="text-2xl sm:text-3xl font-bold text-white">~100</p>
+                <p class="text-xs text-slate-300 font-medium">Export Containers/Mo</p>
               </div>
               <div>
-                <p class="text-2xl font-bold text-slate-900">9+</p>
-                <p class="text-xs text-slate-500 font-medium">Global Destination Hubs</p>
+                <p class="text-2xl sm:text-3xl font-bold text-emerald-400">9+</p>
+                <p class="text-xs text-slate-300 font-medium">Global Destination Hubs</p>
               </div>
             </div>
           </div>
 
-          <!-- Hero Right Column (High-Quality Photographic Commodity Still Life) -->
-          <div class="lg:col-span-6 relative">
-            <div class="relative mx-auto rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-slate-100 group">
-              <img 
-                src="assets/images/hero-export.jpg" 
-                alt="Agricultural food commodities and spices ready for export" 
-                class="w-full h-[380px] sm:h-[460px] lg:h-[500px] object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="eager"
-              >
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+          <!-- Hero Right Column (Glassmorphic Live Trade Operations Showcase) -->
+          <div class="lg:col-span-5 relative">
+            <div class="relative mx-auto rounded-2xl overflow-hidden shadow-2xl border border-white/20 bg-slate-900/60 backdrop-blur-xl p-6 sm:p-7 space-y-6 text-white">
               
-              <!-- Floating Overlay Badge -->
-              <div class="absolute bottom-5 left-5 right-5 p-4 rounded-xl bg-white/95 backdrop-blur-md border border-white/40 shadow-lg flex items-center justify-between">
-                <div>
-                  <p class="text-xs uppercase font-bold text-[#0fa14a] tracking-wider">Commodity Export Operations</p>
-                  <p class="text-sm font-bold text-slate-900">Direct Port Sourcing & Reefer Container Shipments</p>
+              <!-- Card Header -->
+              <div class="flex items-center justify-between pb-4 border-b border-white/10">
+                <div class="flex items-center gap-2.5">
+                  <span class="relative flex h-3 w-3">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                  </span>
+                  <span class="text-xs font-bold uppercase tracking-wider text-emerald-300">Live Trade Desk</span>
                 </div>
-                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
-                  Verified B2B
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">
+                  Direct Sourcing
                 </span>
               </div>
+
+              <!-- Two Operational Pillars -->
+              <div class="space-y-3">
+                <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/40 transition-colors flex items-start gap-3.5">
+                  <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 mt-0.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-bold text-white">Direct Hing Import Operations</h4>
+                    <p class="text-xs text-slate-300 mt-0.5">20 MT/Month direct from Afghanistan farms with 100% lab certification.</p>
+                  </div>
+                </div>
+
+                <div class="p-3.5 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/40 transition-colors flex items-start gap-3.5">
+                  <div class="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center shrink-0 mt-0.5">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+                  </div>
+                  <div>
+                    <h4 class="text-sm font-bold text-white">Global Container Shipments</h4>
+                    <p class="text-xs text-slate-300 mt-0.5">Basmati Rice, Spices, Vegetables & Seafood via port-side reefer containers.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Compliance & Quick Action -->
+              <div class="pt-4 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div class="text-xs text-slate-400 flex items-center gap-2">
+                  <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                  <span>FSSAI &bull; APEDA &bull; Phytosanitary</span>
+                </div>
+                <a href="contact.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold text-emerald-950 bg-emerald-400 hover:bg-emerald-300 transition-colors shadow">
+                  <span>Fast Quote</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+              </div>
+
             </div>
           </div>
 

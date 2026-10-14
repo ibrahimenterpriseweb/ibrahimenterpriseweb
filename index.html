@@ -137,10 +137,11 @@
     
     <!-- SECTION B: Hero with Background Video -->
     <section class="relative isolate min-h-[560px] lg:min-h-[620px] flex items-center py-16 lg:py-24 overflow-hidden">
-      <!-- Background Video (Clean, natural, no heavy dark overlay) -->
+      <!-- Background Video (Zoomed to hide watermark, clean & natural) -->
       <div class="absolute inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
         <video 
-          class="w-full h-full object-cover object-center" 
+          class="w-full h-full object-cover" 
+          style="transform: scale(1.25); transform-origin: center 20%;"
           autoplay 
           muted 
           loop 
@@ -151,6 +152,20 @@
           <source src="https://res.cloudinary.com/dun5uome/video/upload/v1791982321/gemini_generated_video_dbcc8f35_gwr_video_mvp.mp4" type="video/mp4">
         </video>
       </div>
+
+      <!-- Organic Agricultural Green Leaf Accents (Left & Right Flanks) -->
+      <img 
+        src="assets/images/leaf-branch-left.png" 
+        alt="" 
+        class="absolute -left-12 sm:-left-8 lg:-left-4 bottom-0 sm:bottom-2 w-40 sm:w-56 lg:w-72 pointer-events-none select-none z-10 opacity-75 filter drop-shadow-[0_14px_28px_rgba(0,0,0,0.6)] transform -rotate-6 transition-all duration-700" 
+        aria-hidden="true"
+      >
+      <img 
+        src="assets/images/leaf-branch-right.png" 
+        alt="" 
+        class="absolute -right-12 sm:-right-8 lg:-right-4 bottom-0 sm:bottom-2 w-40 sm:w-56 lg:w-72 pointer-events-none select-none z-10 opacity-75 filter drop-shadow-[0_14px_28px_rgba(0,0,0,0.6)] transform rotate-6 transition-all duration-700" 
+        aria-hidden="true"
+      >
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
         <div class="max-w-3xl space-y-6">

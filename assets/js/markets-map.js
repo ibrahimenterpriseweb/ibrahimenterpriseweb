@@ -54,21 +54,9 @@ function renderTradeMap(containerId) {
           </filter>
         </defs>
 
-        <!-- World Continent Polygons (Clean Stylized Geometric Contours) -->
-        <!-- North America -->
-        <path d="M 140 100 L 220 90 L 290 120 L 270 190 L 200 230 L 160 210 L 120 160 Z" fill="#1e293b" opacity="0.4" />
-        <!-- South America -->
-        <path d="M 270 260 L 330 290 L 310 390 L 270 420 L 250 320 Z" fill="#1e293b" opacity="0.3" />
-        <!-- Europe & UK -->
-        <path d="M 460 110 L 530 100 L 550 140 L 510 180 L 460 170 L 440 140 Z" fill="#1e293b" opacity="0.5" />
-        <!-- Africa -->
-        <path d="M 480 200 L 560 200 L 580 280 L 540 370 L 490 320 L 470 230 Z" fill="#1e293b" opacity="0.4" />
-        <!-- Asia (Central, South, East) -->
-        <path d="M 570 110 L 800 110 L 840 210 L 760 280 L 680 270 L 650 200 L 580 170 Z" fill="#1e293b" opacity="0.5" />
-        <!-- Southeast Asia -->
-        <path d="M 720 280 L 790 310 L 810 370 L 740 360 Z" fill="#1e293b" opacity="0.4" />
-        <!-- Australia -->
-        <path d="M 820 340 L 910 330 L 910 410 L 830 400 Z" fill="#1e293b" opacity="0.3" />
+        <!-- High-Resolution Graphic World Map Background -->
+        <image href="assets/images/world-map.jpg" x="0" y="0" width="1000" height="500" preserveAspectRatio="none" opacity="0.85" />
+        <rect x="0" y="0" width="1000" height="500" fill="#0f172a" opacity="0.15" />
 
         <!-- Grid Lines for Navigation Aesthetic -->
         <line x1="0" y1="250" x2="1000" y2="250" stroke="#334155" stroke-dasharray="2 6" stroke-width="0.7" opacity="0.5" />

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="art-meta-title">Trade Insight — Ibrahim Groups</title>
+  <meta name="description" id="art-meta-desc" content="Read commercial commodity trade perspectives from Ibrahim Groups.">
+  <link rel="canonical" id="art-meta-canonical" href="https://www.ibrahimgroups.in/insight-detail.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f4f9f6',
+              100: '#e5f2eb',
+              200: '#cbe5d7',
+              500: '#0fa14a',
+              600: '#0d853e',
+              700: '#095226',
+              dark: '#231f20'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-white text-slate-800 antialiased flex flex-col min-h-screen">
+
+  <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">Trade Intelligence</span>
+        <span class="font-medium text-slate-200">B2B Commodity Market Analysis</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <span>Trade Desk: <a href="tel:+918056103146" class="text-white hover:text-emerald-400">+91 8056103146</a></span>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <img src="assets/images/logo.png" alt="Ibrahim Groups Logo" class="h-12 md:h-14 w-auto object-contain">
+        </a>
+        <nav class="hidden lg:flex items-center gap-7">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="products.html" class="nav-link">Products</a>
+          <a href="trade.html" class="nav-link">Import & Export</a>
+          <a href="markets.html" class="nav-link">Global Markets</a>
+          <a href="quality.html" class="nav-link">Quality & Compliance</a>
+          <a href="about.html" class="nav-link">About Us</a>
+          <a href="insights.html" class="nav-link active">Insights</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <div class="hidden sm:flex items-center gap-3">
+          <a href="contact.html" class="btn-primary text-sm">Request a Quote</a>
+        </div>
+        <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <div id="mobile-drawer" class="fixed top-0 right-0 w-80 max-w-[85vw] h-full bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+      <img src="assets/images/logo.png" alt="Ibrahim Groups" class="h-10 w-auto">
+      <button id="mobile-close-btn" class="p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="p-6 flex-1 overflow-y-auto space-y-4">
+      <nav class="flex flex-col space-y-2 text-base font-medium">
+        <a href="index.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Home</a>
+        <a href="products.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Products</a>
+        <a href="trade.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Import & Export</a>
+        <a href="markets.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Global Markets</a>
+        <a href="quality.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Quality & Compliance</a>
+        <a href="about.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">About Us</a>
+        <a href="insights.html" class="px-3 py-2 rounded-lg text-emerald-600 bg-emerald-50 font-semibold">Insights</a>
+        <a href="contact.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Contact Us</a>
+      </nav>
+      <div class="pt-6 border-t border-slate-100 space-y-3">
+        <a href="contact.html" class="btn-primary w-full text-center text-sm">Request a Quote</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="flex-grow">
+    
+    <!-- Breadcrumb -->
+    <div class="bg-slate-50 border-b border-slate-200/80 py-3">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex items-center gap-2 text-xs text-slate-500 font-medium">
+          <a href="index.html" class="hover:text-emerald-600">Home</a>
+          <span>/</span>
+          <a href="insights.html" class="hover:text-emerald-600">Insights</a>
+          <span>/</span>
+          <span id="breadcrumb-title" class="text-slate-900 truncate max-w-xs">Article</span>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Article Content Layout -->
+    <article class="py-12 lg:py-16 bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header Metadata -->
+        <div class="space-y-4 mb-8">
+          <div class="flex items-center gap-3">
+            <span id="art-category" class="badge-green">Category</span>
+            <span id="art-readtime" class="text-xs text-slate-500 font-medium">4 min read</span>
+          </div>
+
+          <h1 id="art-title" class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
+            Article Title
+          </h1>
+
+          <div class="flex items-center gap-3 text-xs text-slate-500 pt-2 border-t border-slate-100">
+            <span id="art-author" class="font-semibold text-slate-700">Author</span>
+            <span>&bull;</span>
+            <span id="art-date">Date</span>
+          </div>
+        </div>
+
+        <!-- Hero Feature Image -->
+        <div class="rounded-2xl overflow-hidden shadow-lg border border-slate-200 mb-10 aspect-[16/9]">
+          <img id="art-image" src="assets/images/hero-export.jpg" alt="Article banner" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Body Copy -->
+        <div id="art-content" class="prose prose-slate max-w-none text-slate-700 text-sm sm:text-base leading-relaxed space-y-5">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- B2B Call to Action Box inside Article -->
+        <div class="mt-12 p-8 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-3">
+          <span class="badge-green">Direct Trade Sourcing</span>
+          <h3 class="text-xl font-bold text-slate-900">Partner with Ibrahim Groups</h3>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Discuss commercial procurement for pure Afghanistan Hing imports or multi-commodity export container shipments directly with our Chennai trade desk.
+          </p>
+          <div class="pt-2">
+            <a href="contact.html" class="btn-primary text-xs">Request a Trade Quote &rarr;</a>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="bg-[#231f20] text-slate-300 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-xs">
+        <div class="space-y-3">
+          <img src="assets/images/logo-white.png" alt="Ibrahim Groups" class="h-10 w-auto">
+          <p class="text-slate-400">International food commodity import and export trading house based in Chennai, India.</p>
+        </div>
+        <div>
+          <h5 class="font-bold uppercase text-white mb-2">Commodities</h5>
+          <ul class="space-y-1.5 text-slate-400">
+            <li><a href="product-detail.html?slug=hing-asafoetida" class="hover:text-emerald-400">Pure Hing (Afghanistan)</a></li>
+            <li><a href="product-detail.html?slug=basmati-rice" class="hover:text-emerald-400">Basmati Rice</a></li>
+            <li><a href="product-detail.html?slug=cardamom" class="hover:text-emerald-400">Green Cardamom</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold uppercase text-white mb-2">Company</h5>
+          <ul class="space-y-1.5 text-slate-400">
+            <li><a href="trade.html" class="hover:text-emerald-400">Import & Export</a></li>
+            <li><a href="markets.html" class="hover:text-emerald-400">Global Markets</a></li>
+            <li><a href="contact.html" class="hover:text-emerald-400">Request a Quote</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold uppercase text-white mb-2">Contact</h5>
+          <p class="text-slate-400">
+            #115, Opp. Hot Chips, East Coast Road, Neelangarai, Chennai - 600 041.<br>
+            Phone: +91 8056103146 &bull; +91 9894495686<br>
+            Email: ibrahimgroupss@gmail.com
+          </p>
+        </div>
+      </div>
+      <div class="mt-8 pt-6 border-t border-slate-800 text-slate-500 flex justify-between">
+        <p>&copy; 2026 Ibrahim Groups.</p>
+        <div class="flex gap-4">
+          <a href="privacy.html" class="hover:text-slate-400">Privacy</a>
+          <a href="terms.html" class="hover:text-slate-400">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/insights-data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const slug = urlParams.get('slug') || 'afghanistan-hing-trade-dynamics';
+      const article = getInsightBySlug(slug) || INSIGHTS[0];
+
+      document.title = `${article.title} | Ibrahim Groups Insights`;
+      const metaDesc = document.getElementById('art-meta-desc');
+      if (metaDesc) metaDesc.setAttribute('content', article.excerpt);
+
+      document.getElementById('breadcrumb-title').textContent = article.title;
+      document.getElementById('art-category').textContent = article.category;
+      document.getElementById('art-readtime').textContent = article.readTime;
+      document.getElementById('art-title').textContent = article.title;
+      document.getElementById('art-author').textContent = article.author;
+      document.getElementById('art-date').textContent = article.date;
+      document.getElementById('art-image').src = article.image;
+      document.getElementById('art-image').alt = article.title;
+      document.getElementById('art-content').innerHTML = article.content;
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Import & Export Operations — Ibrahim Groups</title>
+  <meta name="description" content="Commercial import of raw Hing from Afghanistan (20 MT/mo) and multi-commodity export operations (~100 containers/mo) by Ibrahim Groups.">
+  <link rel="canonical" href="https://www.ibrahimgroups.in/trade.html">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f4f9f6',
+              100: '#e5f2eb',
+              200: '#cbe5d7',
+              500: '#0fa14a',
+              600: '#0d853e',
+              700: '#095226',
+              dark: '#231f20'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-white text-slate-800 antialiased flex flex-col min-h-screen">
+
+  <div class="bg-slate-900 text-slate-300 text-xs py-2 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-950 text-emerald-400 border border-emerald-800">Trade Sourcing</span>
+        <span class="font-medium text-slate-200">20 MT/Month Hing Imports &bull; 100 Export Containers/Month</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-400">
+        <span>Trade Desk: <a href="tel:+918056103146" class="text-white hover:text-emerald-400">+91 8056103146</a></span>
+        <span class="hidden md:inline"><a href="mailto:ibrahimgroupss@gmail.com" class="hover:text-emerald-400">ibrahimgroupss@gmail.com</a></span>
+      </div>
+    </div>
+  </div>
+
+  <header class="site-header sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <img src="assets/images/logo.png" alt="Ibrahim Groups Logo" class="h-12 md:h-14 w-auto object-contain">
+        </a>
+        <nav class="hidden lg:flex items-center gap-7">
+          <a href="index.html" class="nav-link">Home</a>
+          <a href="products.html" class="nav-link">Products</a>
+          <a href="trade.html" class="nav-link active">Import & Export</a>
+          <a href="markets.html" class="nav-link">Global Markets</a>
+          <a href="quality.html" class="nav-link">Quality & Compliance</a>
+          <a href="about.html" class="nav-link">About Us</a>
+          <a href="insights.html" class="nav-link">Insights</a>
+          <a href="contact.html" class="nav-link">Contact</a>
+        </nav>
+        <div class="hidden sm:flex items-center gap-3">
+          <a href="contact.html" class="btn-primary text-sm" data-open-quote>Request a Quote</a>
+        </div>
+        <button id="mobile-menu-btn" type="button" class="lg:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div id="mobile-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
+  <div id="mobile-drawer" class="fixed top-0 right-0 w-80 max-w-[85vw] h-full bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+      <img src="assets/images/logo.png" alt="Ibrahim Groups" class="h-10 w-auto">
+      <button id="mobile-close-btn" class="p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="p-6 flex-1 overflow-y-auto space-y-4">
+      <nav class="flex flex-col space-y-2 text-base font-medium">
+        <a href="index.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Home</a>
+        <a href="products.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Products</a>
+        <a href="trade.html" class="px-3 py-2 rounded-lg text-emerald-600 bg-emerald-50 font-semibold">Import & Export</a>
+        <a href="markets.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Global Markets</a>
+        <a href="quality.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Quality & Compliance</a>
+        <a href="about.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">About Us</a>
+        <a href="insights.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Insights</a>
+        <a href="contact.html" class="px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-50">Contact Us</a>
+      </nav>
+      <div class="pt-6 border-t border-slate-100 space-y-3">
+        <a href="contact.html" class="btn-primary w-full text-center text-sm" data-open-quote>Request a Quote</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="flex-grow">
+    
+    <!-- Hero Banner -->
+    <section class="bg-gradient-to-b from-emerald-50/50 via-white to-white py-14 lg:py-20 border-b border-slate-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-[#0fa14a] text-xs font-bold tracking-wider uppercase mb-3">
+            Two-Way Commercial Operations
+          </div>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight">
+            Import & Export Trade Corridors
+          </h1>
+          <p class="text-slate-600 text-base sm:text-lg mt-3 leading-relaxed">
+            Ibrahim Groups operates balanced two-way commodity trading: directly importing high-purity raw Hing from Afghanistan and exporting diverse agricultural food commodities globally.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Section 1: Inbound Hing Import Operations -->
+    <section class="py-16 bg-white border-b border-slate-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <div class="lg:col-span-6 space-y-5">
+            <span class="badge-green">Inbound Trade Corridor</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              Afghanistan Hing (Asafoetida) Imports
+            </h2>
+            <div class="p-4 rounded-xl bg-amber-50/80 border border-amber-200">
+              <p class="text-xs font-bold uppercase text-amber-800">Reported Monthly Import Volume</p>
+              <p class="text-2xl font-extrabold text-amber-900 mt-0.5">20 Metric Tons / Month</p>
+            </div>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Asafoetida is an essential natural resin prized for its distinctive allium aroma and flavor in global spice formulations. Ibrahim Groups maintains direct commercial sourcing relationships across Afghanistan's mountain collection zones, handling:
+            </p>
+            <ul class="space-y-2 text-xs text-slate-700">
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#0fa14a]"></span>
+                <span>Direct procurement of unadulterated raw gum oleoresin tears and crystalline lumps.</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#0fa14a]"></span>
+                <span>Customs bonded transport and rigorous purity evaluations at port of entry.</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#0fa14a]"></span>
+                <span>Supply contracts to leading Indian and international spice manufacturing units.</span>
+              </li>
+            </ul>
+            <div class="pt-2">
+              <a href="product-detail.html?slug=hing-asafoetida" class="btn-primary text-xs">
+                View Hing Specifications &rarr;
+              </a>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6">
+            <div class="rounded-2xl overflow-hidden shadow-xl border border-slate-200 aspect-[4/3]">
+              <img src="assets/images/hing-afghanistan.jpg" alt="Pure Hing Afghanistan import" class="w-full h-full object-cover">
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Detailed Section 2: Outbound Export Operations -->
+    <section class="py-16 bg-slate-50 border-b border-slate-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          
+          <div class="lg:col-span-6 order-2 lg:order-1">
+            <div class="rounded-2xl overflow-hidden shadow-xl border border-slate-200 aspect-[4/3]">
+              <img src="assets/images/container-shipping.jpg" alt="Export container logistics at maritime port" class="w-full h-full object-cover">
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 order-1 lg:order-2 space-y-5">
+            <span class="badge-green">Outbound Export Operations</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+              Agricultural Food Commodities Export
+            </h2>
+            <div class="p-4 rounded-xl bg-emerald-50/80 border border-emerald-200">
+              <p class="text-xs font-bold uppercase text-emerald-800">Reported Monthly Export Capacity</p>
+              <p class="text-2xl font-extrabold text-[#0fa14a] mt-0.5">~100 Containers / Month</p>
+              <p class="text-xs text-slate-600 mt-1">Spanning perishable cold-chain produce and dry non-perishable commodities.</p>
+            </div>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              Consolidated from primary cultivation hubs across India, our export consignments are handled with precision logistics:
+            </p>
+            <div class="grid grid-cols-2 gap-3 text-xs text-slate-700">
+              <div class="p-3 bg-white rounded-lg border border-slate-200">
+                <span class="font-bold block text-slate-900">Dry Commodities</span>
+                <span class="text-slate-500">Basmati Rice, Black Pepper, Cardamom, Coconut & Onion Powders.</span>
+              </div>
+              <div class="p-3 bg-white rounded-lg border border-slate-200">
+                <span class="font-bold block text-slate-900">Cold Chain (Reefer)</span>
+                <span class="text-slate-500">Fresh Agricultural Vegetables & Blast-Frozen Coastal Seafood.</span>
+              </div>
+            </div>
+            <div class="pt-2">
+              <a href="products.html" class="btn-primary text-xs">
+                Browse Export Catalog &rarr;
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Sourcing & Supply Chain Protocol (5-Step Framework) -->
+    <section class="py-16 bg-white border-b border-slate-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            Proposed 5-Step Sourcing Workflow
+          </h2>
+          <p class="text-slate-600 text-xs sm:text-sm mt-2">
+            The operational sequence followed for each consignment from farm selection to maritime transit.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xl font-bold text-[#0fa14a]">01</span>
+            <h4 class="font-bold text-slate-900 text-sm mt-1">Supplier Sourcing</h4>
+            <p class="text-xs text-slate-600 mt-2">Direct origin partner selection in Afghanistan & South India.</p>
+          </div>
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xl font-bold text-[#0fa14a]">02</span>
+            <h4 class="font-bold text-slate-900 text-sm mt-1">Quality Inspection</h4>
+            <p class="text-xs text-slate-600 mt-2">Laboratory lot testing, moisture check, and purity validation.</p>
+          </div>
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xl font-bold text-[#0fa14a]">03</span>
+            <h4 class="font-bold text-slate-900 text-sm mt-1">Packaging</h4>
+            <p class="text-xs text-slate-600 mt-2">Export grade barrier bags, vacuum cartons, and reefer packing.</p>
+          </div>
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xl font-bold text-[#0fa14a]">04</span>
+            <h4 class="font-bold text-slate-900 text-sm mt-1">Documentation</h4>
+            <p class="text-xs text-slate-600 mt-2">Phytosanitary, certificate of origin, and international bills.</p>
+          </div>
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+            <span class="text-xl font-bold text-[#0fa14a]">05</span>
+            <h4 class="font-bold text-slate-900 text-sm mt-1">Shipment</h4>
+            <p class="text-xs text-slate-600 mt-2">Scheduled maritime container dispatch to target ports.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="bg-[#231f20] text-slate-300 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-xs">
+        <div class="space-y-3">
+          <img src="assets/images/logo-white.png" alt="Ibrahim Groups" class="h-10 w-auto">
+          <p class="text-slate-400">International food commodity import and export trading house based in Chennai, India.</p>
+        </div>
+        <div>
+          <h5 class="font-bold uppercase text-white mb-2">Commodities</h5>
+          <ul class="space-y-1.5 text-slate-400">
+            <li><a href="product-detail.html?slug=hing-asafoetida" class="hover:text-emerald-400">Pure Hing (Afghanistan)</a></li>
+            <li><a href="product-detail.html?slug=basmati-rice" class="hover:text-emerald-400">Basmati Rice</a></li>
+            <li><a href="product-detail.html?slug=black-pepper" class="hover:text-emerald-400">Black Pepper</a></li>
+            <li><a href="product-detail.html?slug=cardamom" class="hover:text-emerald-400">Green Cardamom</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold uppercase text-white mb-2">Company</h5>
+          <ul class="space-y-1.5 text-slate-400">
+            <li><a href="trade.html" class="hover:text-emerald-400">Import & Export</a></li>
+            <li><a href="markets.html" class="hover:text-emerald-400">Global Markets</a></li>
+            <li><a href="quality.html" class="hover:text-emerald-400">Quality & Compliance</a></li>
+            <li><a href="contact.html" class="hover:text-emerald-400">Request a Quote</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold uppercase text-white mb-2">Contact</h5>
+          <p class="text-slate-400">
+            #115, Opp. Hot Chips, East Coast Road, Neelangarai, Chennai - 600 041.<br>
+            Phone: +91 8056103146 &bull; +91 9894495686<br>
+            Email: ibrahimgroupss@gmail.com
+          </p>
+        </div>
+      </div>
+      <div class="mt-8 pt-6 border-t border-slate-800 text-slate-500 flex justify-between">
+        <p>&copy; 2026 Ibrahim Groups.</p>
+        <div class="flex gap-4">
+          <a href="privacy.html" class="hover:text-slate-400">Privacy</a>
+          <a href="terms.html" class="hover:text-slate-400">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

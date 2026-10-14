@@ -1,15 +1,9 @@
 {
-  "name": "ibrahimgroups",
+  "name": "ibrahimenterpriseweb",
   "version": "1.0.0",
   "description": "Ibrahim Groups - International Agricultural Food Commodity Import & Export",
   "private": true,
   "scripts": {
-    "dev": "python3 -m http.server 8080",
-    "build": "echo 'Static assets ready for deployment'",
-    "deploy": "wrangler deploy",
-    "pages:deploy": "wrangler pages deploy ."
-  },
-  "devDependencies": {
-    "wrangler": "^4.151.0"
+    "dev": "python3 -m http.server 8080"
   }
 }

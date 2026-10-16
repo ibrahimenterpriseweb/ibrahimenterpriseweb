@@ -1,7 +1,7 @@
 {
   "name": "ibrahimenterpriseweb",
   "version": "1.0.0",
-  "description": "Ibrahim Groups - International Agricultural Food Commodity Import & Export",
+  "description": "Ibrahim Enterprise - International Agricultural Food Commodity Import & Export",
   "private": true,
   "scripts": {
     "dev": "python3 -m http.server 8080"

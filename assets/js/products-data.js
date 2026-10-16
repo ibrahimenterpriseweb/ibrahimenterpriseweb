@@ -1,9 +1,9 @@
 /**
- * IBRAHIM GROUPS - VERIFIED PRODUCT DATA
+ * IBRAHIM ENTERPRISE - VERIFIED PRODUCT DATA
  * Strictly using verified client information without fabricated specifications.
  */
 
-const PRODUCTS = [
+const DEFAULT_PRODUCTS = [
   {
     id: "hing-asafoetida",
     slug: "hing-asafoetida",
@@ -15,7 +15,7 @@ const PRODUCTS = [
     reportedVolume: "20 MT / month reported import capacity",
     image: "assets/images/hing-afghanistan.jpg",
     shortDesc: "Premium natural Asafoetida (Hing) tears and lumps directly sourced from Afghanistan, renowned for intense aroma and purity.",
-    description: "Ibrahim Groups imports authentic, high-grade Asafoetida (Hing) directly from the mountainous harvest regions of Afghanistan. Available in pure raw resin tears, crystalline chunks, and processed grades, our Hing caters to spice manufacturers, food processing enterprises, and institutional culinary buyers across international markets.",
+    description: "Ibrahim Enterprise imports authentic, high-grade Asafoetida (Hing) directly from the mountainous harvest regions of Afghanistan. Available in pure raw resin tears, crystalline chunks, and processed grades, our Hing caters to spice manufacturers, food processing enterprises, and institutional culinary buyers across international markets.",
     highlights: [
       "Authentic Afghanistan Sourcing",
       "Reported Volume: 20 Metric Tons / Month",
@@ -153,7 +153,7 @@ const PRODUCTS = [
     reportedVolume: "Perishable container exports across Southeast Asia & Gulf",
     image: "assets/images/fresh-vegetables.jpg",
     shortDesc: "Farm-fresh export vegetables including red onions, green chillies, okra, drumsticks, and seasonal greens.",
-    description: "Ibrahim Groups handles temperature-controlled perishable vegetable exports with expedited dockside transfers and reefer container routing. We supply fresh onions, shallots, green chillies, okra, and specialty vegetables to retail chains and wholesale terminal markets in Sri Lanka, Malaysia, Singapore, and the Middle East.",
+    description: "Ibrahim Enterprise handles temperature-controlled perishable vegetable exports with expedited dockside transfers and reefer container routing. We supply fresh onions, shallots, green chillies, okra, and specialty vegetables to retail chains and wholesale terminal markets in Sri Lanka, Malaysia, Singapore, and the Middle East.",
     highlights: [
       "Direct Farm Harvesting & Packhouse Sorting",
       "Immediate Pre-Cooling & Cold Chain Maintenance",
@@ -176,7 +176,7 @@ const PRODUCTS = [
     reportedVolume: "Reefer container shipments to international seafood buyers",
     image: "assets/images/seafood.jpg",
     shortDesc: "Hygienically processed, blast-frozen marine seafood including Vannamei prawns, cuttlefish, ribbon fish, and sea bass.",
-    description: "Operating in close proximity to major Indian coastal landing ports, Ibrahim Groups exports prime frozen seafood consignments. Processed in certified coastal freezing plants with rapid IQF (Individually Quick Frozen) and block freezing, our seafood reaches buyers in China, Southeast Asia, the Middle East, and Europe.",
+    description: "Operating in close proximity to major Indian coastal landing ports, Ibrahim Enterprise exports prime frozen seafood consignments. Processed in certified coastal freezing plants with rapid IQF (Individually Quick Frozen) and block freezing, our seafood reaches buyers in China, Southeast Asia, the Middle East, and Europe.",
     highlights: [
       "Coastal Dockside Sourcing from Sustainable Catches",
       "Rapid Blast & IQF Freezing at -40°C",
@@ -189,6 +189,23 @@ const PRODUCTS = [
     relatedSlugs: ["fresh-vegetables", "basmati-rice", "black-pepper"]
   }
 ];
+
+function getStoredProducts() {
+  try {
+    const raw = localStorage.getItem('ibrahim_custom_products');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.warn('Could not read custom products from localStorage:', e);
+  }
+  return DEFAULT_PRODUCTS;
+}
+
+const PRODUCTS = getStoredProducts();
 
 const CATEGORIES = ["All", "Spices", "Rice & Food Ingredients", "Vegetables", "Seafood"];
 

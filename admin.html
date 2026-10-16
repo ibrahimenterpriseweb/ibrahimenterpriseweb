@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trade Operations Admin Portal — Ibrahim Enterprise</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f4f9f6',
+              100: '#e5f2eb',
+              200: '#cbe5d7',
+              500: '#0fa14a',
+              600: '#0d853e',
+              700: '#095226',
+              800: '#14281d',
+              dark: '#231f20'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            heading: ['Plus Jakarta Sans', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Core & Admin Custom Stylesheets -->
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/admin.css">
+</head>
+<body class="bg-[#f8faf9] text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- =========================================================================
+       LOGIN GATEWAY (Shown if unauthenticated)
+       ========================================================================= -->
+  <section id="login-section" class="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-radial from-slate-900 via-slate-900 to-[#121c16] relative overflow-hidden">
+    <!-- Ambient glowing accents -->
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-[#0fa14a]/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-emerald-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="max-w-md w-full relative z-10">
+      <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 p-8 sm:p-10">
+        <!-- Brand Header -->
+        <div class="text-center">
+          <div class="inline-block p-2 rounded-xl bg-slate-900/5 mb-3">
+            <img src="assets/images/logo.png?v=2" alt="Ibrahim Enterprise Logo" class="h-12 w-auto mx-auto object-contain">
+          </div>
+          <h1 class="text-2xl font-bold text-slate-900">Trade Operations Portal</h1>
+          <p class="text-xs text-slate-500 mt-1">Authorized Management Access &bull; Ibrahim Enterprise</p>
+        </div>
+
+        <!-- Quick Demo Hint -->
+        <div class="mt-6 p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 flex items-start gap-2.5">
+          <svg class="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <div>
+            <span class="font-bold">Staff Access:</span> <span class="font-mono text-emerald-800">admin@ibrahimenterprise.com</span> / <span class="font-mono text-emerald-800">admin123</span>
+          </div>
+        </div>
+
+        <div id="login-error" class="hidden mt-4 p-3 rounded-lg bg-red-50 border border-red-200 text-xs text-red-700 font-medium"></div>
+
+        <!-- Login Form -->
+        <form id="admin-login-form" class="mt-6 space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Corporate Email</label>
+            <input type="email" id="login-email" class="form-input text-sm" placeholder="admin@ibrahimenterprise.com" value="admin@ibrahimenterprise.com" required>
+          </div>
+
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+            <input type="password" id="login-password" class="form-input text-sm" placeholder="••••••••" value="admin123" required>
+          </div>
+
+          <div class="flex items-center justify-between text-xs pt-1">
+            <label class="flex items-center gap-2 cursor-pointer text-slate-600">
+              <input type="checkbox" id="login-remember" checked class="rounded text-[#0fa14a] focus:ring-[#0fa14a]">
+              <span>Remember session</span>
+            </label>
+            <span class="text-slate-400">256-bit encrypted</span>
+          </div>
+
+          <button type="submit" class="btn-primary w-full mt-3 justify-center shadow-lg shadow-emerald-900/10 py-3">
+            <span>Sign In to Trade Console</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+          </button>
+        </form>
+
+        <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+          <button id="btn-demo-login" type="button" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span>One-Click Quick Login</span>
+          </button>
+          <a href="index.html" class="text-xs text-slate-400 hover:text-slate-600">Return to Website &rarr;</a>
+        </div>
+      </div>
+      <p class="text-center text-[11px] text-slate-400 mt-6">&copy; 2026 Ibrahim Enterprise. All trade operations confidential.</p>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       ADMIN APP WORKSPACE (Shown when authenticated)
+       ========================================================================= -->
+  <div id="app-section" class="hidden min-h-screen flex flex-col lg:flex-row bg-[#f8faf9]">
+
+    <!-- Mobile Sidebar Backdrop -->
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-40 hidden lg:hidden"></div>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside id="admin-sidebar" class="fixed lg:sticky top-0 left-0 h-screen w-72 bg-[#121815] text-slate-300 z-50 flex flex-col justify-between transition-transform duration-300 ease-in-out -translate-x-full lg:translate-x-0 border-r border-white/5">
+      <div>
+        <!-- Brand Header in Sidebar -->
+        <div class="h-20 px-6 flex items-center justify-between border-b border-white/5">
+          <a href="index.html" class="flex items-center gap-3">
+            <div class="p-1.5 rounded-lg bg-white/10">
+              <img src="assets/images/logo.png?v=2" alt="Ibrahim Enterprise" class="h-8 w-auto">
+            </div>
+            <div>
+              <div class="font-bold text-white text-sm tracking-tight">Ibrahim Enterprise</div>
+              <div class="text-[10px] text-emerald-400 font-medium">Trade Operations Desk</div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="p-4 space-y-1.5">
+          <div data-tab="dashboard" class="admin-nav-item active">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>
+            <span class="flex-1">Overview</span>
+          </div>
+
+          <div data-tab="inquiries" class="admin-nav-item">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+            <span class="flex-1">Trade Inquiries & Leads</span>
+            <span class="unread-inquiries-badge hidden px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500 text-white">0</span>
+          </div>
+
+          <div data-tab="products" class="admin-nav-item">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+            <span class="flex-1">Commodity Catalog</span>
+          </div>
+
+          <div data-tab="insights" class="admin-nav-item">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+            <span class="flex-1">Market Insights</span>
+          </div>
+
+          <div data-tab="analytics" class="admin-nav-item">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            <span class="flex-1">Trade Corridors</span>
+          </div>
+
+          <div data-tab="settings" class="admin-nav-item">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <span class="flex-1">Desk Settings</span>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Bottom User Card & Quick Links -->
+      <div class="p-4 border-t border-white/5 space-y-3">
+        <!-- Live status -->
+        <div class="p-3 rounded-lg bg-white/5 flex items-center justify-between text-xs">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-slate-300 font-medium">Live Website Sync</span>
+          </div>
+          <a href="index.html" target="_blank" class="text-emerald-400 hover:text-emerald-300 text-[11px] font-semibold flex items-center gap-1">
+            <span>Visit Site</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          </a>
+        </div>
+
+        <div class="flex items-center justify-between px-2 pt-1 text-xs">
+          <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-[#0fa14a] text-white font-bold flex items-center justify-center text-xs">
+              IE
+            </div>
+            <div>
+              <div class="font-semibold text-white">Director Desk</div>
+              <div class="text-[10px] text-slate-400">admin@ibrahimenterprise.com</div>
+            </div>
+          </div>
+          <button data-logout class="p-1.5 text-slate-400 hover:text-red-400 rounded-lg hover:bg-white/5" title="Sign Out">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN DASHBOARD CONTENT AREA -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- TOP BAR -->
+      <header class="h-20 bg-white border-b border-slate-200 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+        <div class="flex items-center gap-3">
+          <button id="admin-mobile-toggle" class="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+          </button>
+          <div>
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight">Trade Operations Console</h2>
+            <p class="text-xs text-slate-500 hidden sm:block">Ibrahim Enterprise &bull; Afghanistan Hing & Global Agricultural Commodities</p>
+          </div>
+        </div>
+
+        <!-- Global Search & Header Actions -->
+        <div class="flex items-center gap-3">
+          <div class="relative w-44 sm:w-64">
+            <input type="text" id="global-search" placeholder="Search inquiries, products..." class="form-input text-xs py-1.5 pl-8 pr-3 rounded-full bg-slate-50 border-slate-200 focus:bg-white">
+            <svg class="w-4 h-4 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </div>
+
+          <a href="index.html" target="_blank" class="hidden md:flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50">
+            <span>Public Site</span>
+            <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          </a>
+
+          <button data-logout class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-red-50 text-red-700 hover:bg-red-100 transition-colors">
+            Logout
+          </button>
+        </div>
+      </header>
+
+      <!-- TAB 1: DASHBOARD OVERVIEW -->
+      <main id="view-dashboard" class="tab-view p-4 sm:p-8 space-y-8 flex-1">
+        <!-- Top Stats Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div class="stat-card">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Leads & Inquiries</span>
+              <span class="p-2 rounded-lg bg-emerald-50 text-[#0fa14a]">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+              </span>
+            </div>
+            <div id="stat-total-inquiries" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">0</div>
+            <div class="text-xs text-emerald-600 font-medium mt-1 flex items-center gap-1">
+              <span>&uarr; Active Pipeline</span>
+              <span class="text-slate-400 font-normal">&bull; Real-time</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Unquoted / New Leads</span>
+              <span class="p-2 rounded-lg bg-amber-50 text-amber-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </span>
+            </div>
+            <div id="stat-new-inquiries" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">0</div>
+            <div class="text-xs text-amber-600 font-medium mt-1">Requires commercial quote</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Active Commodities</span>
+              <span class="p-2 rounded-lg bg-blue-50 text-blue-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+              </span>
+            </div>
+            <div id="stat-active-products" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">0</div>
+            <div class="text-xs text-blue-600 font-medium mt-1">Import & Export catalog</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Published Insights</span>
+              <span class="p-2 rounded-lg bg-purple-50 text-purple-600">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </span>
+            </div>
+            <div id="stat-published-insights" class="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">0</div>
+            <div class="text-xs text-purple-600 font-medium mt-1">B2B market reports</div>
+          </div>
+        </div>
+
+        <!-- Middle Row: Chart & Key Sourcing Capacity -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <!-- Inquiries Timeline Chart -->
+          <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <h3 class="text-base font-bold text-slate-900">Commercial Inquiries Growth</h3>
+                  <p class="text-xs text-slate-500 mt-0.5">Monthly incoming trade lead trajectory</p>
+                </div>
+                <span class="text-xs font-semibold px-2.5 py-1 rounded bg-emerald-50 text-emerald-700">+34% vs last quarter</span>
+              </div>
+            </div>
+            <div class="mt-6 h-60 w-full relative">
+              <canvas id="chart-inquiries-trend" class="w-full h-full"></canvas>
+            </div>
+          </div>
+
+          <!-- Trade Corridors Snapshot -->
+          <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col justify-between">
+            <div>
+              <h3 class="text-base font-bold text-slate-900">Core Sourcing Corridors</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Operational volume status</p>
+
+              <div class="mt-4 space-y-4">
+                <div class="p-3.5 rounded-lg bg-[#f4f9f6] border border-emerald-100">
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-800">
+                    <span>Pure Hing (Asafoetida)</span>
+                    <span class="text-emerald-700">20 MT / Month</span>
+                  </div>
+                  <div class="text-[11px] text-slate-500 mt-1">Origin: Afghanistan (Direct Mountain Collection)</div>
+                  <div class="w-full bg-emerald-200 h-1.5 rounded-full mt-2 overflow-hidden">
+                    <div class="bg-[#0fa14a] h-full rounded-full" style="width: 85%;"></div>
+                  </div>
+                </div>
+
+                <div class="p-3.5 rounded-lg bg-slate-50 border border-slate-100">
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-800">
+                    <span>Basmati Rice Export</span>
+                    <span class="text-slate-900">~100 Containers / Mo</span>
+                  </div>
+                  <div class="text-[11px] text-slate-500 mt-1">India &rarr; Middle East, Europe & USA</div>
+                  <div class="w-full bg-slate-200 h-1.5 rounded-full mt-2 overflow-hidden">
+                    <div class="bg-slate-700 h-full rounded-full" style="width: 90%;"></div>
+                  </div>
+                </div>
+
+                <div class="p-3.5 rounded-lg bg-slate-50 border border-slate-100">
+                  <div class="flex items-center justify-between text-xs font-bold text-slate-800">
+                    <span>Spices, Produce & Seafood</span>
+                    <span class="text-slate-900">Export Reefer / Dry</span>
+                  </div>
+                  <div class="text-[11px] text-slate-500 mt-1">Chennai Port & South Indian Hubs</div>
+                  <div class="w-full bg-slate-200 h-1.5 rounded-full mt-2 overflow-hidden">
+                    <div class="bg-blue-600 h-full rounded-full" style="width: 70%;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button onclick="adminApp.switchTab('inquiries')" class="w-full mt-4 text-xs font-semibold py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors">
+              Manage All Trade Leads &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Recent Inquiries Table -->
+        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+          <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <div>
+              <h3 class="text-base font-bold text-slate-900">Recent Commercial Inquiries</h3>
+              <p class="text-xs text-slate-500 mt-0.5">Latest buyer quote requests from website & trade desk</p>
+            </div>
+            <button onclick="adminApp.switchTab('inquiries')" class="text-xs font-semibold text-[#0fa14a] hover:text-emerald-700">
+              View All Inquiries &rarr;
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Buyer & Company</th>
+                  <th>Target Commodity</th>
+                  <th>Destination Port</th>
+                  <th>Status</th>
+                  <th class="text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="overview-recent-inquiries">
+                <!-- Injected via admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+      <!-- TAB 2: INQUIRIES & LEAD CRM -->
+      <main id="view-inquiries" class="tab-view hidden p-4 sm:p-8 space-y-6 flex-1">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900">Commercial Inquiries & Lead CRM</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Manage international buyers, quotations, and container inquiries</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="adminApp.openAddInquiryModal()" class="btn-primary text-xs py-2 px-3.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              <span>Log Manual Lead</span>
+            </button>
+            <button onclick="adminApp.exportInquiriesCSV()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-xs flex items-center gap-1.5">
+              <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Export CSV</span>
+            </button>
+            <button onclick="adminApp.exportInquiriesJSON()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-xs flex items-center gap-1.5">
+              <span>Export JSON</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Controls Bar -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xs">
+          <!-- Status Filter Tabs -->
+          <div class="flex flex-wrap items-center gap-1.5 w-full md:w-auto">
+            <button data-filter="all" onclick="adminApp.setInquiryFilter('all')" class="inquiry-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-[#0fa14a] text-white shadow-sm">All</button>
+            <button data-filter="new" onclick="adminApp.setInquiryFilter('new')" class="inquiry-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 bg-white border border-slate-200 hover:bg-slate-50">New Leads</button>
+            <button data-filter="in review" onclick="adminApp.setInquiryFilter('in review')" class="inquiry-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 bg-white border border-slate-200 hover:bg-slate-50">In Review</button>
+            <button data-filter="quoted" onclick="adminApp.setInquiryFilter('quoted')" class="inquiry-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 bg-white border border-slate-200 hover:bg-slate-50">Quoted</button>
+            <button data-filter="closed" onclick="adminApp.setInquiryFilter('closed')" class="inquiry-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 bg-white border border-slate-200 hover:bg-slate-50">Closed Deals</button>
+            <button data-filter="archived" onclick="adminApp.setInquiryFilter('archived')" class="inquiry-filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 bg-white border border-slate-200 hover:bg-slate-50">Archived</button>
+          </div>
+
+          <div class="text-xs text-slate-500 font-medium" id="inquiries-filtered-count">0 leads</div>
+        </div>
+
+        <!-- Inquiries Table -->
+        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+          <div class="overflow-x-auto">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Ref & Date</th>
+                  <th>Buyer & Company</th>
+                  <th>Commodity & Quantity</th>
+                  <th>Destination Port</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="inquiries-table-body">
+                <!-- Injected via admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+
+      <!-- TAB 3: PRODUCT CATALOG MANAGER -->
+      <main id="view-products" class="tab-view hidden p-4 sm:p-8 space-y-6 flex-1">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900">Commodity Catalog Manager</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Manage verified import & export agricultural commodities</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="adminApp.openAddProductModal()" class="btn-primary text-xs py-2 px-3.5">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              <span>Add New Commodity</span>
+            </button>
+            <button onclick="adminApp.exportProductsJSON()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-xs">
+              Export Products JSON
+            </button>
+            <button onclick="adminApp.resetProductsToDefault()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-red-50 text-red-700 hover:bg-red-100 transition-colors">
+              Reset to Defaults
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs text-slate-500 font-medium">
+          <span id="products-count-badge">0 commodities</span>
+          <span>All edits immediately reflect on the live website pages</span>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="products-admin-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <!-- Injected via admin.js -->
+        </div>
+      </main>
+
+      <!-- TAB 4: MARKET INSIGHTS -->
+      <main id="view-insights" class="tab-view hidden p-4 sm:p-8 space-y-6 flex-1">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold text-slate-900">Market Commentary & Insights</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Publish authoritative agricultural trade articles and logistics standards</p>
+          </div>
+          <button onclick="adminApp.openAddInsightModal()" class="btn-primary text-xs py-2 px-3.5">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            <span>Publish New Insight</span>
+          </button>
+        </div>
+
+        <div class="text-xs text-slate-500 font-medium" id="insights-count-badge">0 articles</div>
+
+        <!-- Insights List -->
+        <div id="insights-admin-list" class="space-y-4">
+          <!-- Injected via admin.js -->
+        </div>
+      </main>
+
+      <!-- TAB 5: ANALYTICS & CORRIDORS -->
+      <main id="view-analytics" class="tab-view hidden p-4 sm:p-8 space-y-8 flex-1">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">Global Trade Corridors & Analytics</h2>
+          <p class="text-xs text-slate-500 mt-0.5">International logistics flow, pipeline conversions and destination hubs</p>
+        </div>
+
+        <!-- Conversion Pipeline Funnel -->
+        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+          <h3 class="text-base font-bold text-slate-900">Inquiry to Shipment Conversion Funnel</h3>
+          <p class="text-xs text-slate-500">Pipeline progression of current trade requests</p>
+
+          <div class="space-y-3 mt-4">
+            <div>
+              <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span>1. New Inquiries Logged</span>
+                <span id="funnel-new-txt">0 (0%)</span>
+              </div>
+              <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                <div id="funnel-new" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 20%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span>2. Under Review & Phyto-Verification</span>
+                <span id="funnel-review-txt">0 (0%)</span>
+              </div>
+              <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                <div id="funnel-review" class="bg-amber-500 h-full rounded-full transition-all duration-500" style="width: 20%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span>3. Commercial Quotation (FOB / CIF) Issued</span>
+                <span id="funnel-quoted-txt">0 (0%)</span>
+              </div>
+              <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                <div id="funnel-quoted" class="bg-blue-600 h-full rounded-full transition-all duration-500" style="width: 20%;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs font-semibold text-slate-700 mb-1">
+                <span>4. Confirmed Contract & LC / Order Closed</span>
+                <span id="funnel-closed-txt">0 (0%)</span>
+              </div>
+              <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
+                <div id="funnel-closed" class="bg-purple-600 h-full rounded-full transition-all duration-500" style="width: 20%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trade Geographic Corridors Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🇦🇫</span>
+              <h4 class="font-bold text-slate-900 text-sm">Afghanistan Hing Corridor</h4>
+            </div>
+            <div class="text-xs text-slate-500 mt-2">
+              Mountain harvest resin collection via Herat and Kabul. Monthly import capacity: <strong>20 Metric Tons</strong>.
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-emerald-700 font-semibold flex items-center justify-between">
+              <span>Mode: Direct Custody</span>
+              <span>Status: Active</span>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🇦🇪</span>
+              <h4 class="font-bold text-slate-900 text-sm">Dubai & Gulf Re-Export Hub</h4>
+            </div>
+            <div class="text-xs text-slate-500 mt-2">
+              Discharge port: Jebel Ali. Planned bonded facility for fast transit to European & GCC wholesale buyers.
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-blue-700 font-semibold flex items-center justify-between">
+              <span>Port: Jebel Ali</span>
+              <span>Consignments: Weekly</span>
+            </div>
+          </div>
+
+          <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <div class="flex items-center gap-2">
+              <span class="text-xl">🇸🇬</span>
+              <h4 class="font-bold text-slate-900 text-sm">Southeast Asia Produce Corridor</h4>
+            </div>
+            <div class="text-xs text-slate-500 mt-2">
+              Direct feeder routes from Chennai port to Singapore (Jurong) & Port Klang, Malaysia for fresh produce & seafood.
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-purple-700 font-semibold flex items-center justify-between">
+              <span>Reefer CA Containers</span>
+              <span>Transit: 4-6 Days</span>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- TAB 6: SETTINGS & TRADE DESK -->
+      <main id="view-settings" class="tab-view hidden p-4 sm:p-8 space-y-8 flex-1">
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">Trade Desk & System Settings</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Company profile, official contact channels, and system data backups</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Profile Form -->
+          <div class="lg:col-span-2 bg-white p-6 sm:p-8 rounded-xl border border-slate-200 shadow-sm">
+            <h3 class="text-base font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">Official Company Profile</h3>
+            
+            <form onsubmit="adminApp.saveSettingsForm(event)" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Company Trading Name</label>
+                  <input type="text" id="set-company-name" class="form-input text-xs" required>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Official Tagline</label>
+                  <input type="text" id="set-tagline" class="form-input text-xs">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Primary Trade Desk Phone</label>
+                  <input type="text" id="set-phone-primary" class="form-input text-xs" required>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Secondary Mobile / WhatsApp</label>
+                  <input type="text" id="set-phone-secondary" class="form-input text-xs">
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">Trade Desk Email</label>
+                  <input type="email" id="set-email-trade" class="form-input text-xs" required>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-slate-700 mb-1">WhatsApp Direct Number (with Country Code)</label>
+                  <input type="text" id="set-whatsapp" class="form-input text-xs" placeholder="+918056103146">
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Chennai Headquarters Address</label>
+                <textarea id="set-address-hq" rows="2" class="form-textarea text-xs"></textarea>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-slate-700 mb-1">Sourcing Hub Corridor Address</label>
+                <textarea id="set-address-corridor" rows="2" class="form-textarea text-xs"></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary text-xs py-2.5 px-5">
+                Save Company Profile
+              </button>
+            </form>
+          </div>
+
+          <!-- Data Backup & Maintenance -->
+          <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+            <div>
+              <h3 class="text-base font-bold text-slate-900 mb-2">System Data Management</h3>
+              <p class="text-xs text-slate-500 mb-6">Export full database backup or restore state</p>
+
+              <div class="space-y-4">
+                <div class="p-4 rounded-lg bg-slate-50 border border-slate-100">
+                  <div class="font-bold text-slate-900 text-xs">Complete Site Backup</div>
+                  <div class="text-[11px] text-slate-500 mt-1">Exports all inquiries, custom commodities, insight articles & settings into a single JSON snapshot.</div>
+                  <button onclick="adminApp.downloadFullBackup()" class="w-full mt-3 btn-primary text-xs py-2 justify-center">
+                    Download Full JSON Backup
+                  </button>
+                </div>
+
+                <div class="p-4 rounded-lg bg-slate-50 border border-slate-100">
+                  <div class="font-bold text-slate-900 text-xs">Restore from Backup</div>
+                  <div class="text-[11px] text-slate-500 mt-1">Upload an existing snapshot file to restore all website data.</div>
+                  <input type="file" id="restore-file-input" accept=".json" class="hidden" onchange="adminApp.handleRestoreFile(event)">
+                  <button onclick="adminApp.triggerRestoreFile()" class="w-full mt-3 px-3 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50">
+                    Upload & Restore JSON File
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-400">
+              Session secured via browser encrypted store.
+            </div>
+          </div>
+        </div>
+      </main>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODALS
+       ========================================================================= -->
+
+  <!-- MODAL: INQUIRY DOSSIER & DETAIL -->
+  <div id="modal-inquiry-detail" class="modal-window fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="modal-backdrop fixed inset-0" onclick="adminApp.closeModal('modal-inquiry-detail')"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 z-10 border border-slate-200">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="modal-inq-id" class="font-mono text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">INQ-000</span>
+            <span id="modal-inq-date" class="text-xs text-slate-400">Date</span>
+          </div>
+          <h3 id="modal-inq-name" class="text-xl font-bold text-slate-900 mt-1">Buyer Name</h3>
+        </div>
+        <button onclick="adminApp.closeModal('modal-inquiry-detail')" class="p-2 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="mt-6 space-y-6">
+        <!-- Client Details Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100 text-xs">
+          <div>
+            <span class="text-slate-400 block">Company</span>
+            <span id="modal-inq-company" class="font-bold text-slate-800">Company Name</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block">Email Address</span>
+            <a id="modal-inq-email" href="#" class="font-bold text-emerald-700 hover:underline">email@domain.com</a>
+          </div>
+          <div>
+            <span class="text-slate-400 block">Phone / WhatsApp</span>
+            <a id="modal-inq-phone" href="#" class="font-bold text-slate-800 hover:underline">+000 000 000</a>
+          </div>
+          <div>
+            <span class="text-slate-400 block">Country</span>
+            <span id="modal-inq-country" class="font-bold text-slate-800">Country</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block">Inquiry Type</span>
+            <span id="modal-inq-type" class="font-bold text-slate-800">Export</span>
+          </div>
+          <div>
+            <span class="text-slate-400 block">Status</span>
+            <select id="modal-inq-status-select" class="font-bold text-slate-800 bg-transparent border-0 p-0 focus:ring-0 cursor-pointer">
+              <option value="New">🟢 New</option>
+              <option value="In Review">🟡 In Review</option>
+              <option value="Quoted">🔵 Quoted</option>
+              <option value="Closed">🟣 Closed</option>
+              <option value="Archived">⚪ Archived</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Commodity & Quantity -->
+        <div class="p-4 rounded-xl border border-slate-200 bg-white">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xs text-emerald-700 font-bold uppercase tracking-wider">Requested Commodity</span>
+              <h4 id="modal-inq-product" class="text-lg font-bold text-slate-900 mt-0.5">Commodity Name</h4>
+            </div>
+            <div class="text-right">
+              <span class="text-xs text-slate-400 block">Volume</span>
+              <span id="modal-inq-quantity" class="text-base font-extrabold text-slate-900">20 MT</span>
+            </div>
+          </div>
+          <div class="mt-3 pt-3 border-t border-slate-100 text-xs text-slate-600 flex items-center justify-between">
+            <span>Destination Port: <strong id="modal-inq-destination" class="text-slate-800">Port Name</strong></span>
+          </div>
+        </div>
+
+        <!-- Buyer Message -->
+        <div>
+          <span class="text-xs font-bold text-slate-700 block mb-1">Buyer Specifications & Message</span>
+          <div id="modal-inq-message" class="p-4 rounded-lg bg-slate-50 text-xs text-slate-700 border border-slate-100 leading-relaxed italic">
+            Message
+          </div>
+        </div>
+
+        <!-- Staff Internal Notes -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Internal Trade Desk Notes & Pricing Quoted</label>
+          <textarea id="modal-inq-notes" rows="3" class="form-textarea text-xs" placeholder="e.g. Quoted CIF Dubai $4,200/MT on 15 Oct. Awaiting buyer LC confirmation..."></textarea>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-2">
+            <a id="modal-inq-wa-btn" href="#" target="_blank" class="px-4 py-2 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 flex items-center gap-1.5 shadow-xs">
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.007c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.174.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.099.824z"/></svg>
+              <span>Reply WhatsApp</span>
+            </a>
+          </div>
+
+          <button onclick="adminApp.saveInquiryNotes()" class="btn-primary text-xs py-2 px-5">
+            Save Notes & Status
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD MANUAL INQUIRY -->
+  <div id="modal-add-inquiry" class="modal-window fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="modal-backdrop fixed inset-0" onclick="adminApp.closeModal('modal-add-inquiry')"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 z-10 border border-slate-200">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div>
+          <h3 class="text-xl font-bold text-slate-900">Log Manual Trade Lead</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Record phone, WhatsApp, or exhibition lead</p>
+        </div>
+        <button onclick="adminApp.closeModal('modal-add-inquiry')" class="p-2 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="form-add-inquiry" onsubmit="adminApp.submitManualInquiry(event)" class="mt-5 space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Buyer Name *</label>
+            <input type="text" id="manual-inq-name" class="form-input text-xs" placeholder="e.g. Tariq Al-Mansoor" required>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Company / Organization</label>
+            <input type="text" id="manual-inq-company" class="form-input text-xs" placeholder="e.g. Al Khaleej Foods">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Corporate Email</label>
+            <input type="email" id="manual-inq-email" class="form-input text-xs" placeholder="buyer@domain.com">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Phone / WhatsApp *</label>
+            <input type="text" id="manual-inq-phone" class="form-input text-xs" placeholder="+971 50 000 0000" required>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Country *</label>
+            <input type="text" id="manual-inq-country" class="form-input text-xs" placeholder="e.g. UAE / UK / Singapore" required>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Inquiry Type</label>
+            <select id="manual-inq-type" class="form-select text-xs">
+              <option value="Export Consignment">Export Consignment</option>
+              <option value="Hing Import Inquiry">Afghanistan Hing Import</option>
+              <option value="Long-term Supply Contract">Long-term Supply Contract</option>
+              <option value="Sample Lot Request">Sample Lot Request</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Commodity *</label>
+            <select id="manual-inq-product" class="form-select text-xs" required>
+              <option value="Pure Hing / Asafoetida">Pure Hing / Asafoetida (Afghanistan)</option>
+              <option value="Basmati Rice">Basmati Rice (India)</option>
+              <option value="Black Pepper">Black Pepper</option>
+              <option value="Green Cardamom">Green Cardamom</option>
+              <option value="Desiccated Coconut Powder">Desiccated Coconut Powder</option>
+              <option value="Dehydrated Onion Powder & Flakes">Dehydrated Onion Powder & Flakes</option>
+              <option value="Fresh Agricultural Produce & Vegetables">Fresh Agricultural Produce</option>
+              <option value="Export Marine Seafood">Export Marine Seafood</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Quantity & Unit</label>
+            <div class="flex gap-2">
+              <input type="text" id="manual-inq-quantity" class="form-input text-xs w-2/3" placeholder="e.g. 20">
+              <select id="manual-inq-unit" class="form-select text-xs w-1/3">
+                <option value="Metric Tons (MT)">MT</option>
+                <option value="Containers (FCL)">FCL</option>
+                <option value="Kg">Kg</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Destination Port</label>
+          <input type="text" id="manual-inq-destination" class="form-input text-xs" placeholder="e.g. Jebel Ali / Colombo / Hamburg">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Buyer Notes / Message</label>
+          <textarea id="manual-inq-message" rows="2" class="form-textarea text-xs" placeholder="Buyer requirements, packaging preferences..."></textarea>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Initial Status</label>
+            <select id="manual-inq-status" class="form-select text-xs">
+              <option value="New">🟢 New Lead</option>
+              <option value="In Review">🟡 In Review</option>
+              <option value="Quoted">🔵 Quoted</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Internal Desk Notes</label>
+            <input type="text" id="manual-inq-notes" class="form-input text-xs" placeholder="e.g. Met at Gulfood 2026">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary w-full text-xs py-2.5 justify-center mt-2">
+          Save & Log Trade Lead
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT PRODUCT -->
+  <div id="modal-product-editor" class="modal-window fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="modal-backdrop fixed inset-0" onclick="adminApp.closeModal('modal-product-editor')"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 z-10 border border-slate-200">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div>
+          <h3 id="product-modal-title" class="text-xl font-bold text-slate-900">Manage Commodity</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Live catalog synchronization</p>
+        </div>
+        <button onclick="adminApp.closeModal('modal-product-editor')" class="p-2 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="form-product-editor" onsubmit="adminApp.saveProductForm(event)" class="mt-5 space-y-4">
+        <input type="hidden" id="edit-product-id">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Commodity Name *</label>
+            <input type="text" id="prod-name" class="form-input text-xs" placeholder="e.g. Pure Hing / Asafoetida" required>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">URL Slug</label>
+            <input type="text" id="prod-slug" class="form-input text-xs" placeholder="e.g. hing-asafoetida (leave empty to auto-generate)">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Category *</label>
+            <select id="prod-category" class="form-select text-xs">
+              <option value="Spices">Spices</option>
+              <option value="Rice & Food Ingredients">Rice & Food Ingredients</option>
+              <option value="Vegetables">Vegetables</option>
+              <option value="Seafood">Seafood</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Trade Type *</label>
+            <select id="prod-tradetype" class="form-select text-xs">
+              <option value="Export">Export</option>
+              <option value="Import">Import</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Origin *</label>
+            <input type="text" id="prod-origin" class="form-input text-xs" placeholder="e.g. Afghanistan / India" required>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Reported Volume / Capacity</label>
+            <input type="text" id="prod-volume" class="form-input text-xs" placeholder="e.g. 20 MT / month reported import capacity">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Tagline</label>
+            <input type="text" id="prod-tagline" class="form-input text-xs" placeholder="e.g. Directly imported raw aromatic resin from Afghanistan">
+          </div>
+        </div>
+
+        <!-- Image Selector with Preview -->
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Commodity Image</label>
+          <div class="flex items-center gap-4">
+            <div class="w-24 h-16 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0">
+              <img id="product-image-preview" src="assets/images/hing-afghanistan.jpg" alt="Preview" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 space-y-2">
+              <select id="prod-image-preset" onchange="document.getElementById('prod-image').value = this.value; document.getElementById('product-image-preview').src = this.value;" class="form-select text-xs">
+                <option value="assets/images/hing-afghanistan.jpg">assets/images/hing-afghanistan.jpg (Hing Afghanistan)</option>
+                <option value="assets/images/basmati-rice.jpg">assets/images/basmati-rice.jpg (Basmati Rice)</option>
+                <option value="assets/images/black-pepper.jpg">assets/images/black-pepper.jpg (Black Pepper)</option>
+                <option value="assets/images/cardamom.jpg">assets/images/cardamom.jpg (Green Cardamom)</option>
+                <option value="assets/images/coconut-powder.jpg">assets/images/coconut-powder.jpg (Coconut Powder)</option>
+                <option value="assets/images/onion-powder.jpg">assets/images/onion-powder.jpg (Onion Powder)</option>
+                <option value="assets/images/fresh-vegetables.jpg">assets/images/fresh-vegetables.jpg (Fresh Produce)</option>
+                <option value="assets/images/seafood.jpg">assets/images/seafood.jpg (Marine Seafood)</option>
+                <option value="assets/images/container-shipping.jpg">assets/images/container-shipping.jpg (Container Shipping)</option>
+              </select>
+              <input type="text" id="prod-image" oninput="document.getElementById('product-image-preview').src = this.value" class="form-input text-xs" placeholder="Or enter custom path or URL">
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Short Description (for cards)</label>
+          <textarea id="prod-shortdesc" rows="2" class="form-textarea text-xs" placeholder="Brief 1-2 sentence overview..."></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Full Detailed Specifications</label>
+          <textarea id="prod-description" rows="3" class="form-textarea text-xs" placeholder="Comprehensive commodity details..."></textarea>
+        </div>
+
+        <!-- Dynamic Bullet Highlights -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-semibold text-slate-700">Key Quality Highlights</label>
+            <button type="button" onclick="adminApp.addHighlightInput()" class="text-xs font-semibold text-emerald-700 hover:text-emerald-900">+ Add Highlight</button>
+          </div>
+          <div id="prod-highlights-container">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Export Packaging Specifications</label>
+            <input type="text" id="prod-packaging" class="form-input text-xs" placeholder="e.g. 25kg multi-layer moisture-barrier bags">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Applications & Uses</label>
+            <input type="text" id="prod-applications" class="form-input text-xs" placeholder="e.g. Spice blends, food manufacturing, retail">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary w-full text-xs py-2.5 justify-center mt-3">
+          Save & Publish Commodity
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD / EDIT INSIGHT -->
+  <div id="modal-insight-editor" class="modal-window fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="modal-backdrop fixed inset-0" onclick="adminApp.closeModal('modal-insight-editor')"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 z-10 border border-slate-200">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div>
+          <h3 id="insight-modal-title" class="text-xl font-bold text-slate-900">Publish Market Insight</h3>
+          <p class="text-xs text-slate-500 mt-0.5">Authoritative commodity commentary</p>
+        </div>
+        <button onclick="adminApp.closeModal('modal-insight-editor')" class="p-2 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form id="form-insight-editor" onsubmit="adminApp.saveInsightForm(event)" class="mt-5 space-y-4">
+        <input type="hidden" id="edit-insight-id">
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Article Title *</label>
+          <input type="text" id="insight-title" class="form-input text-xs" placeholder="e.g. The Global Trade Dynamics of Pure Hing" required>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Category</label>
+            <input type="text" id="insight-category" class="form-input text-xs" placeholder="e.g. Import Analysis">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Date</label>
+            <input type="text" id="insight-date" class="form-input text-xs" placeholder="e.g. October 2026">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Read Time</label>
+            <input type="text" id="insight-readtime" class="form-input text-xs" placeholder="e.g. 4 min read">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Cover Image Path</label>
+            <input type="text" id="insight-image" class="form-input text-xs" placeholder="assets/images/hing-afghanistan.jpg">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Author Attribution</label>
+            <input type="text" id="insight-author" class="form-input text-xs" placeholder="Trade Intelligence Desk • Ibrahim Enterprise">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">URL Slug</label>
+          <input type="text" id="insight-slug" class="form-input text-xs" placeholder="Leave blank to auto-generate">
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Summary / Excerpt</label>
+          <textarea id="insight-excerpt" rows="2" class="form-textarea text-xs" placeholder="Brief lead paragraph for preview cards..."></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Article Content (HTML allowed)</label>
+          <textarea id="insight-content" rows="6" class="form-textarea text-xs font-mono" placeholder="<p>Paragraph content...</p><h3>Subheading</h3><p>Analysis...</p>"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary w-full text-xs py-2.5 justify-center mt-2">
+          Save & Publish Insight Article
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: CONFIRM DELETION -->
+  <div id="modal-confirm-delete" class="modal-window fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+    <div class="modal-backdrop fixed inset-0" onclick="adminApp.closeModal('modal-confirm-delete')"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 z-10 border border-slate-200 text-center">
+      <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto mb-4">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+      </div>
+      <h3 class="text-lg font-bold text-slate-900">Confirm Deletion</h3>
+      <p id="delete-modal-desc" class="text-xs text-slate-500 mt-1">Are you sure you want to delete this record?</p>
+
+      <div class="flex items-center gap-3 mt-6">
+        <button onclick="adminApp.closeModal('modal-confirm-delete')" class="flex-1 px-4 py-2 rounded-lg text-xs font-semibold border border-slate-200 text-slate-700 hover:bg-slate-50">
+          Cancel
+        </button>
+        <button onclick="adminApp.executeDelete()" class="flex-1 px-4 py-2 rounded-lg text-xs font-semibold bg-red-600 text-white hover:bg-red-700">
+          Yes, Delete
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="assets/js/products-data.js"></script>
+  <script src="assets/js/insights-data.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>

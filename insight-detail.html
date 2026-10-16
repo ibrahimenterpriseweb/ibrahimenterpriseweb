@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="art-meta-title">Trade Insight — Ibrahim Groups</title>
-  <meta name="description" id="art-meta-desc" content="Read commercial commodity trade perspectives from Ibrahim Groups.">
-  <link rel="canonical" id="art-meta-canonical" href="https://www.ibrahimgroups.in/insight-detail.html">
+  <title id="art-meta-title">Trade Insight — Ibrahim Enterprise</title>
+  <meta name="description" id="art-meta-desc" content="Read commercial commodity trade perspectives from Ibrahim Enterprise.">
+  <link rel="canonical" id="art-meta-canonical" href="https://www.ibrahimenterprise.com/insight-detail.html">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,7 +46,8 @@
         <span class="font-medium text-slate-200">B2B Commodity Market Analysis</span>
       </div>
       <div class="flex items-center gap-4 text-slate-400">
-        <span>Trade Desk: <a href="tel:+918056103146" class="text-white hover:text-emerald-400">+91 8056103146</a></span>
+        <span>Trade Desk: <a href="tel:+918056103146" class="text-white hover:text-emerald-400">(0091) 80561 03146</a></span>
+        <span class="hidden md:inline"><a href="mailto:ibraexim@gmail.com" class="hover:text-emerald-400">ibraexim@gmail.com</a></span>
       </div>
     </div>
   </div>
@@ -55,7 +56,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">
         <a href="index.html" class="flex items-center gap-3 group">
-          <img src="assets/images/logo.png" alt="Ibrahim Groups Logo" class="h-12 md:h-14 w-auto object-contain">
+          <img src="assets/images/logo.png?v=2" alt="Ibrahim Enterprise Logo" class="h-12 md:h-14 w-auto object-contain">
         </a>
         <nav class="hidden lg:flex items-center gap-7">
           <a href="index.html" class="nav-link">Home</a>
@@ -81,7 +82,7 @@
   <div id="mobile-backdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden transition-opacity"></div>
   <div id="mobile-drawer" class="fixed top-0 right-0 w-80 max-w-[85vw] h-full bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
     <div class="p-5 border-b border-slate-100 flex items-center justify-between">
-      <img src="assets/images/logo.png" alt="Ibrahim Groups" class="h-10 w-auto">
+      <img src="assets/images/logo.png?v=2" alt="Ibrahim Enterprise" class="h-10 w-auto">
       <button id="mobile-close-btn" class="p-2 text-slate-500 hover:text-slate-800 rounded-lg hover:bg-slate-100">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
       </button>
@@ -153,7 +154,7 @@
         <!-- B2B Call to Action Box inside Article -->
         <div class="mt-12 p-8 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-3">
           <span class="badge-green">Direct Trade Sourcing</span>
-          <h3 class="text-xl font-bold text-slate-900">Partner with Ibrahim Groups</h3>
+          <h3 class="text-xl font-bold text-slate-900">Partner with Ibrahim Enterprise</h3>
           <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
             Discuss commercial procurement for pure Afghanistan Hing imports or multi-commodity export container shipments directly with our Chennai trade desk.
           </p>
@@ -171,7 +172,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-xs">
         <div class="space-y-3">
-          <img src="assets/images/logo-white.png" alt="Ibrahim Groups" class="h-10 w-auto">
+          <img src="assets/images/logo-white.png?v=2" alt="Ibrahim Enterprise" class="h-10 w-auto">
           <p class="text-slate-400">International food commodity import and export trading house based in Chennai, India.</p>
         </div>
         <div>
@@ -193,14 +194,14 @@
         <div>
           <h5 class="font-bold uppercase text-white mb-2">Contact</h5>
           <p class="text-slate-400">
-            #115, Opp. Hot Chips, East Coast Road, Neelangarai, Chennai - 600 041.<br>
-            Phone: +91 8056103146 &bull; +91 9894495686<br>
-            Email: ibrahimgroupss@gmail.com
+            16/7, F1 Azeez Mulk 7th Street, Thousand Lights, Chennai - 600 006.<br>
+            Phone: (0091) 80561 03146<br>
+            Email: ibraexim@gmail.com
           </p>
         </div>
       </div>
       <div class="mt-8 pt-6 border-t border-slate-800 text-slate-500 flex justify-between">
-        <p>&copy; 2026 Ibrahim Groups.</p>
+        <p>&copy; 2026 Ibrahim Enterprise.</p>
         <div class="flex gap-4">
           <a href="privacy.html" class="hover:text-slate-400">Privacy</a>
           <a href="terms.html" class="hover:text-slate-400">Terms</a>
@@ -217,7 +218,7 @@
       const slug = urlParams.get('slug') || 'afghanistan-hing-trade-dynamics';
       const article = getInsightBySlug(slug) || INSIGHTS[0];
 
-      document.title = `${article.title} | Ibrahim Groups Insights`;
+      document.title = `${article.title} | Ibrahim Enterprise Insights`;
       const metaDesc = document.getElementById('art-meta-desc');
       if (metaDesc) metaDesc.setAttribute('content', article.excerpt);
 

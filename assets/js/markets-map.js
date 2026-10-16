@@ -1,5 +1,5 @@
 /**
- * IBRAHIM GROUPS - INTERACTIVE GLOBAL MARKETS SVG MAP
+ * IBRAHIM ENTERPRISE - INTERACTIVE GLOBAL MARKETS SVG MAP
  * Highlights verified trading routes, target export destinations, and Afghanistan import corridor.
  */
 
@@ -96,7 +96,7 @@ function renderTradeMap(containerId) {
         <g transform="translate(685, 260)">
           <circle r="14" fill="#0fa14a" opacity="0.25" class="node-ping" />
           <circle r="7" fill="#0fa14a" stroke="#ffffff" stroke-width="2" filter="url(#glow)" />
-          <text x="12" y="4" fill="#4ade80" font-weight="700" font-size="12" font-family="sans-serif">India (Ibrahim Groups HQ)</text>
+          <text x="12" y="4" fill="#4ade80" font-weight="700" font-size="12" font-family="sans-serif">India (Ibrahim Enterprise HQ)</text>
           <text x="12" y="16" fill="#94a3b8" font-size="9" font-family="sans-serif">Chennai / Export Gateway (~100 Containers/mo)</text>
         </g>
 

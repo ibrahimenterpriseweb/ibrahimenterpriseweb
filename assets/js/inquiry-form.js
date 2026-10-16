@@ -1,14 +1,14 @@
 /**
- * IBRAHIM GROUPS - FIREBASE & CLOUDFLARE INQUIRY HANDLER
+ * IBRAHIM ENTERPRISE - FIREBASE & CLOUDFLARE INQUIRY HANDLER
  * Handles trade quote submissions, validation, state management, and real-time response.
  */
 
 // Firebase Configuration template (can be injected via environment variables or Cloudflare Pages)
 const firebaseConfig = {
-  apiKey: window.ENV_FIREBASE_API_KEY || "AIzaSyD-ibrahim-groups-placeholder-key",
-  authDomain: "ibrahim-groups-trade.firebaseapp.com",
-  projectId: "ibrahim-groups-trade",
-  storageBucket: "ibrahim-groups-trade.appspot.com",
+  apiKey: window.ENV_FIREBASE_API_KEY || "AIzaSyD-ibrahim-enterprise-placeholder-key",
+  authDomain: "ibrahim-enterprise-trade.firebaseapp.com",
+  projectId: "ibrahim-enterprise-trade",
+  storageBucket: "ibrahim-enterprise-trade.appspot.com",
   messagingSenderId: "1029384756",
   appId: "1:1029384756:web:abcdef123456"
 };
@@ -48,7 +48,10 @@ class InquiryHandler {
       destination: this.form.querySelector('#inquiry-destination')?.value.trim() || '',
       message: this.form.querySelector('#inquiry-message')?.value.trim() || '',
       consent: this.form.querySelector('#inquiry-consent')?.checked || false,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      id: 'INQ-' + Date.now().toString(36).toUpperCase(),
+      status: 'New',
+      notes: ''
     };
 
     // Client-side Validation
@@ -92,7 +95,7 @@ class InquiryHandler {
       localStorage.setItem('ibrahim_inquiries', JSON.stringify(savedInquiries));
 
       this.showMessage(
-        `Thank you, ${formData.fullName}. Your trade inquiry for "${formData.product}" has been officially logged with Ibrahim Groups. Our trade desk will respond within 24 hours.`,
+        `Thank you, ${formData.fullName}. Your trade inquiry for "${formData.product}" has been officially logged with Ibrahim Enterprise. Our trade desk will respond within 24 hours.`,
         'success'
       );
 
@@ -108,7 +111,7 @@ class InquiryHandler {
       }
     } catch (err) {
       console.error('Submission error:', err);
-      this.showMessage('An unexpected error occurred. Please contact us directly at ibrahimgroupss@gmail.com or +91 8056103146.', 'error');
+      this.showMessage('An unexpected error occurred. Please contact us directly at ibraexim@gmail.com or (0091) 80561 03146.', 'error');
     } finally {
       if (submitBtn) {
         submitBtn.disabled = false;

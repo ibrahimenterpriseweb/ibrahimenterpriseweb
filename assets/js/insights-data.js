@@ -1,9 +1,9 @@
 /**
- * IBRAHIM GROUPS - COMMODITY TRADE INSIGHTS DATA
+ * IBRAHIM ENTERPRISE - COMMODITY TRADE INSIGHTS DATA
  * Authoritative B2B market commentary without speculative claims.
  */
 
-const INSIGHTS = [
+const DEFAULT_INSIGHTS = [
   {
     id: "afghanistan-hing-trade-dynamics",
     slug: "afghanistan-hing-trade-dynamics",
@@ -13,7 +13,7 @@ const INSIGHTS = [
     readTime: "4 min read",
     image: "assets/images/hing-afghanistan.jpg",
     excerpt: "An operational overview of the mountainous harvest regions of Afghanistan, the 20 MT/month import corridor, and quality grading of natural oleoresin.",
-    author: "Trade Intelligence Desk &bull; Ibrahim Groups",
+    author: "Trade Intelligence Desk &bull; Ibrahim Enterprise",
     content: `
       <p class="lead text-base sm:text-lg text-slate-700 leading-relaxed font-medium mb-6">
         Asafoetida (Ferula assa-foetida), commercially known as Hing, remains one of the world's most prized natural culinary gum resins. Sourced predominantly from the wild, high-altitude arid mountainous belts of Afghanistan, its cultivation and harvesting follow time-honored artisanal tapping techniques that require rigorous international logistics custody.
@@ -21,7 +21,7 @@ const INSIGHTS = [
 
       <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">The Mountain Sourcing Corridor</h3>
       <p class="text-slate-600 leading-relaxed mb-4">
-        Unlike conventionally cultivated row crops, pure Hing resin is tapped from the living taproots of wild Ferula plants. Successive manual incisions yield white milky exudates that oxidize into rich amber-brown tears and translucent crystalline chunks. Ibrahim Groups coordinates the importation of approximately 20 Metric Tons per month, managing physical collection from Afghan origin hubs into secure customs channels.
+        Unlike conventionally cultivated row crops, pure Hing resin is tapped from the living taproots of wild Ferula plants. Successive manual incisions yield white milky exudates that oxidize into rich amber-brown tears and translucent crystalline chunks. Ibrahim Enterprise coordinates the importation of approximately 20 Metric Tons per month, managing physical collection from Afghan origin hubs into secure customs channels.
       </p>
 
       <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">Purity vs. Compounding in Industrial Use</h3>
@@ -44,7 +44,7 @@ const INSIGHTS = [
     readTime: "5 min read",
     image: "assets/images/basmati-rice.jpg",
     excerpt: "Examining moisture management, sorting precision, and international container packaging required for export Basmati rice.",
-    author: "Commodity Quality Desk &bull; Ibrahim Groups",
+    author: "Commodity Quality Desk &bull; Ibrahim Enterprise",
     content: `
       <p class="lead text-base sm:text-lg text-slate-700 leading-relaxed font-medium mb-6">
         Basmati rice occupies a unique status in the global grain market. Defined by its geographical pedigree, exceptional post-cooking elongation, and characteristic natural 2-acetyl-1-pyrroline aroma, successful container exports necessitate absolute discipline across milling, grading, and maritime transit.
@@ -70,7 +70,7 @@ const INSIGHTS = [
     readTime: "4 min read",
     image: "assets/images/fresh-vegetables.jpg",
     excerpt: "Overcoming temperature-sensitive hurdles in maritime vegetable and seafood exports from Indian ports to Southeast Asian destinations.",
-    author: "Logistics Operations &bull; Ibrahim Groups",
+    author: "Logistics Operations &bull; Ibrahim Enterprise",
     content: `
       <p class="lead text-base sm:text-lg text-slate-700 leading-relaxed font-medium mb-6">
         Exporting fresh agricultural produce such as red onions, green chillies, okra, alongside frozen coastal seafood, demands an unbroken cold chain from farm/dock to port of discharge.
@@ -83,7 +83,7 @@ const INSIGHTS = [
 
       <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">Fast Transit Corridors to Sri Lanka, Malaysia, and Singapore</h3>
       <p class="text-slate-600 leading-relaxed mb-4">
-        Operating out of Chennai and southern coastal ports grants Ibrahim Groups geographical proximity to Colombo, Port Klang, and Singapore. Direct feeder lines minimize transshipment dwell times, ensuring shelf-life integrity for supermarket and wholesale buyers.
+        Operating out of Chennai and southern coastal ports grants Ibrahim Enterprise geographical proximity to Colombo, Port Klang, and Singapore. Direct feeder lines minimize transshipment dwell times, ensuring shelf-life integrity for supermarket and wholesale buyers.
       </p>
     `
   },
@@ -96,7 +96,7 @@ const INSIGHTS = [
     readTime: "4 min read",
     image: "assets/images/dubai-expansion.jpg",
     excerpt: "Analyzing the strategic advantages of a planned Dubai warehouse for Middle East, African, and European food commodity distribution.",
-    author: "Corporate Strategy &bull; Ibrahim Groups",
+    author: "Corporate Strategy &bull; Ibrahim Enterprise",
     content: `
       <p class="lead text-base sm:text-lg text-slate-700 leading-relaxed font-medium mb-6">
         Dubai's unparalleled maritime and air logistics connectivity makes it the preeminent re-export crossroads for global agricultural trade. For international trading houses, establishing a dedicated presence in the UAE represents a logical evolutionary milestone.
@@ -104,7 +104,7 @@ const INSIGHTS = [
 
       <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">Planned Bonded Warehouse Advantages</h3>
       <p class="text-slate-600 leading-relaxed mb-4">
-        Ibrahim Groups' strategic roadmap includes a planned dedicated bonded warehouse in Dubai. By maintaining buffer inventories of non-perishable commodities such as Basmati rice, green cardamom, pepper, and Afghanistan Hing, trade turnarounds to European, Gulf, and North American clients can be shortened by several weeks compared to direct source origin transit.
+        Ibrahim Enterprise' strategic roadmap includes a planned dedicated bonded warehouse in Dubai. By maintaining buffer inventories of non-perishable commodities such as Basmati rice, green cardamom, pepper, and Afghanistan Hing, trade turnarounds to European, Gulf, and North American clients can be shortened by several weeks compared to direct source origin transit.
       </p>
 
       <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">Transparent Operational Status</h3>
@@ -114,6 +114,23 @@ const INSIGHTS = [
     `
   }
 ];
+
+function getStoredInsights() {
+  try {
+    const raw = localStorage.getItem('ibrahim_custom_insights');
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    }
+  } catch (e) {
+    console.warn('Could not read custom insights from localStorage:', e);
+  }
+  return DEFAULT_INSIGHTS;
+}
+
+const INSIGHTS = getStoredInsights();
 
 function getInsightBySlug(slug) {
   return INSIGHTS.find(item => item.slug === slug);

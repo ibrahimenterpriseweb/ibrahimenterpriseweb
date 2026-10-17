@@ -151,22 +151,10 @@
     <section class="py-12 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <!-- Filter Bar -->
-        <div class="flex flex-wrap items-center gap-2 mb-10 pb-4 border-b border-slate-200">
+        <!-- Filter Bar (Populated dynamically with live item counts) -->
+        <div id="category-filter-bar" class="flex flex-wrap items-center gap-2 mb-10 pb-4 border-b border-slate-200">
           <button data-category="All" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-[#0fa14a] text-white shadow-sm">
-            All Products (8)
-          </button>
-          <button data-category="Spices" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">
-            Spices (3)
-          </button>
-          <button data-category="Rice & Food Ingredients" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">
-            Rice & Food Ingredients (3)
-          </button>
-          <button data-category="Vegetables" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">
-            Vegetables (1)
-          </button>
-          <button data-category="Seafood" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200">
-            Seafood (1)
+            All Products
           </button>
         </div>
 
@@ -344,12 +332,63 @@
   <script src="assets/js/inquiry-form.js"></script>
 
   <script>
+    let currentCategory = 'All';
+
+    // Dynamic Category Filter Tabs with Live Item Counts
+    function updateCategoryFilterTabs(activeCategory = 'All') {
+      const filterBar = document.getElementById('category-filter-bar');
+      if (!filterBar) return;
+
+      // Base industry categories + any newly added custom categories from products
+      const baseCategories = ["Spices", "Rice & Food Ingredients", "Vegetables", "Seafood"];
+      const dynamicCategories = Array.from(new Set(PRODUCTS.map(p => p.category).filter(Boolean)));
+      const allCategories = ["All", ...Array.from(new Set([...baseCategories, ...dynamicCategories]))];
+
+      filterBar.innerHTML = allCategories.map(cat => {
+        const isAll = cat === "All";
+        const count = isAll ? PRODUCTS.length : PRODUCTS.filter(p => p.category === cat).length;
+        const label = isAll ? `All Products (${count})` : `${cat} (${count})`;
+        const isActive = cat.toLowerCase() === (activeCategory || 'All').toLowerCase();
+
+        const activeClasses = 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-[#0fa14a] text-white shadow-sm';
+        const inactiveClasses = 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200';
+
+        return `
+          <button data-category="${cat}" class="${isActive ? activeClasses : inactiveClasses}">
+            ${label}
+          </button>
+        `;
+      }).join('');
+
+      // Attach category click handlers
+      filterBar.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          currentCategory = btn.getAttribute('data-category');
+          updateCategoryFilterTabs(currentCategory);
+          renderProducts(currentCategory);
+        });
+      });
+    }
+
     // Product Listing Logic
     function renderProducts(category = "All") {
       const grid = document.getElementById('products-grid');
       if (!grid) return;
 
       const filtered = getProductsByCategory(category);
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full py-16 text-center">
+            <div class="w-12 h-12 mx-auto rounded-full bg-slate-100 flex items-center justify-center text-slate-400 mb-3">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/></svg>
+            </div>
+            <p class="text-sm font-semibold text-slate-700">No commodities in this category yet</p>
+            <p class="text-xs text-slate-400 mt-1">Please select another category or check back soon.</p>
+          </div>
+        `;
+        return;
+      }
 
       grid.innerHTML = filtered.map(prod => `
         <div class="product-card reveal-card group flex flex-col">
@@ -396,30 +435,15 @@
     document.addEventListener('DOMContentLoaded', () => {
       // Check for URL param e.g. ?category=Spices
       const urlParams = new URLSearchParams(window.location.search);
-      const initialCat = urlParams.get('category') || 'All';
+      currentCategory = urlParams.get('category') || 'All';
 
-      const catButtons = document.querySelectorAll('.category-btn');
-      catButtons.forEach(btn => {
-        if (btn.getAttribute('data-category') === initialCat) {
-          btn.className = 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-[#0fa14a] text-white shadow-sm';
-        } else {
-          btn.className = 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200';
-        }
+      updateCategoryFilterTabs(currentCategory);
+      renderProducts(currentCategory);
 
-        btn.addEventListener('click', () => {
-          catButtons.forEach(b => b.className = 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200');
-          btn.className = 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-[#0fa14a] text-white shadow-sm';
-          renderProducts(btn.getAttribute('data-category'));
-        });
-      });
-
-      renderProducts(initialCat);
-
-      // Auto re-render when live updates arrive from Cloud Firestore
+      // Auto re-render both category tab counts and product grid when live updates arrive from Cloud Firestore
       window.addEventListener('products:updated', () => {
-        const activeBtn = document.querySelector('.category-btn.bg-\\[\\#0fa14a\\]');
-        const activeCat = activeBtn ? activeBtn.getAttribute('data-category') : 'All';
-        renderProducts(activeCat || 'All');
+        updateCategoryFilterTabs(currentCategory);
+        renderProducts(currentCategory);
       });
     });
   </script>

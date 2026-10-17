@@ -61,9 +61,7 @@ Open your browser at `http://localhost:8080`.
 The website includes an administrative dashboard enabling non-technical operators to manage product listings, trade leads, and corporate content without modifying source code.
 
 - **URL**: `http://localhost:8080/admin.html`
-- **Default Staff Access**:
-  - **Email**: `admin@ibrahimenterprise.com` (or `ibraexim@gmail.com`)
-  - **Password**: `admin123`
+- **Access**: Secured via Google Firebase Authentication. Login using the registered admin account created in the Firebase Console (Authentication > Users).
 - **Capabilities**:
   1. **Trade Inquiries CRM**: View, filter, review notes, and download buyer trade leads as `.csv` or `.json`.
   2. **Product Catalog Manager**: Add, edit, toggle visibility, and update descriptions, images, or origins. Changes immediately reflect across public product pages.

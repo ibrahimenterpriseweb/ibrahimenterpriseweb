@@ -201,121 +201,112 @@ class AdminApp {
     localStorage.setItem('ibrahim_admin_settings', JSON.stringify(obj));
   }
 
-  // --- AUTHENTICATION ---
+  // --- AUTHENTICATION (STRICT FIREBASE AUTHENTICATION) ---
   initAuth() {
-    const isAuth = sessionStorage.getItem('ibrahim_admin_logged_in') === 'true' || 
-                   localStorage.getItem('ibrahim_admin_remember') === 'true';
-
     const loginSection = document.getElementById('login-section');
     const appSection = document.getElementById('app-section');
 
-    if (isAuth) {
-      if (loginSection) loginSection.classList.add('hidden');
-      if (appSection) appSection.classList.remove('hidden');
-      this.initDashboard();
-    } else {
-      if (loginSection) loginSection.classList.remove('hidden');
-      if (appSection) appSection.classList.add('hidden');
-      this.bindLoginForm();
-    }
+    this.bindLoginForm();
 
-    // Auto-sync with Firebase Auth state
+    // Single source of truth: Firebase onAuthStateChanged
     if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
       window.SERVICES_CONFIG.readyPromise.then(() => {
         if (window.SERVICES_CONFIG.auth && window.SERVICES_CONFIG.authMod) {
           const { onAuthStateChanged } = window.SERVICES_CONFIG.authMod;
           if (typeof onAuthStateChanged === 'function') {
             onAuthStateChanged(window.SERVICES_CONFIG.auth, (user) => {
-              if (user && !isAuth) {
-                sessionStorage.setItem('ibrahim_admin_logged_in', 'true');
+              if (user) {
+                this.currentUser = user;
+                console.log("[Firebase Auth] Active authenticated session for:", user.email);
+
+                const emailEl = document.getElementById('admin-user-email');
+                if (emailEl) emailEl.textContent = user.email || 'Admin';
+
                 if (loginSection) loginSection.classList.add('hidden');
                 if (appSection) appSection.classList.remove('hidden');
+
                 this.initDashboard();
+                this.syncCatalogFromCloud(true);
+                this.syncInquiriesFromFirebase(true);
+              } else {
+                this.currentUser = null;
+                console.log("[Firebase Auth] Session unauthenticated.");
+                if (loginSection) loginSection.classList.remove('hidden');
+                if (appSection) appSection.classList.add('hidden');
               }
             });
           }
         }
+      }).catch(err => {
+        console.error("[Firebase Auth] Ready promise rejected:", err);
       });
     }
   }
 
   bindLoginForm() {
     const form = document.getElementById('admin-login-form');
-    const demoBtn = document.getElementById('btn-demo-login');
     const errorMsg = document.getElementById('login-error');
 
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email').value.trim();
-        const pass = document.getElementById('login-password').value;
-        const remember = document.getElementById('login-remember')?.checked;
+    if (!form || form.dataset.bound === 'true') return;
+    form.dataset.bound = 'true';
 
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalText = submitBtn ? submitBtn.innerHTML : 'Sign In';
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.innerHTML = '<span class="inline-block animate-spin mr-2">◌</span> Authenticating...';
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (errorMsg) errorMsg.classList.add('hidden');
+
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-password').value;
+
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Sign In';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="inline-block animate-spin mr-2">◌</span> Authenticating with Firebase...';
+      }
+
+      try {
+        if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
+          await window.SERVICES_CONFIG.readyPromise;
         }
 
-        let authenticated = false;
-
-        // 1. Try Firebase Official Authentication if available
-        try {
-          if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
-            await window.SERVICES_CONFIG.readyPromise;
-          }
-          if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.auth && window.SERVICES_CONFIG.authMod) {
-            const { signInWithEmailAndPassword } = window.SERVICES_CONFIG.authMod;
-            if (typeof signInWithEmailAndPassword === 'function') {
-              const userCredential = await signInWithEmailAndPassword(window.SERVICES_CONFIG.auth, email, pass);
-              if (userCredential && userCredential.user) {
-                authenticated = true;
-                console.log("[Firebase] Authenticated staff user:", userCredential.user.email);
-              }
-            }
-          }
-        } catch (firebaseErr) {
-          console.warn("[Firebase] Cloud authentication note:", firebaseErr.code || firebaseErr.message);
+        if (!window.SERVICES_CONFIG || !window.SERVICES_CONFIG.auth || !window.SERVICES_CONFIG.authMod) {
+          throw new Error("Firebase Authentication service unavailable. Please check network connection.");
         }
 
-        // 2. Local fallback credentials check (for offline/demo preview)
-        const validEmails = ['admin@ibrahimexim.com', 'admin@ibrahimenterprise.com', 'ibraexim@gmail.com'];
-        if (!authenticated && validEmails.includes(email.toLowerCase()) && pass === 'admin123') {
-          authenticated = true;
-          console.log("[Admin] Logged in via local development credentials.");
+        const { signInWithEmailAndPassword } = window.SERVICES_CONFIG.authMod;
+        if (typeof signInWithEmailAndPassword !== 'function') {
+          throw new Error("Firebase signInWithEmailAndPassword is not ready.");
         }
 
+        const userCredential = await signInWithEmailAndPassword(window.SERVICES_CONFIG.auth, email, pass);
+        console.log("[Firebase] Login verified for:", userCredential.user.email);
+        this.showToast('Login successful. Welcome, Director.', 'success');
+      } catch (err) {
+        console.error("[Firebase Auth Error]:", err);
+        let message = "Invalid email or password. Please verify your registered Firebase admin credentials.";
+        if (err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password' || err.code === 'auth/user-not-found') {
+          message = "Invalid email or password. Please verify your registered Firebase admin account.";
+        } else if (err.code === 'auth/unauthorized-domain') {
+          message = "Domain not authorized in Firebase Console. Please add this domain under Firebase Console > Authentication > Settings > Authorized domains.";
+        } else if (err.code === 'auth/too-many-requests') {
+          message = "Temporarily locked due to multiple failed login attempts. Please try again shortly.";
+        } else if (err.code === 'auth/network-request-failed') {
+          message = "Network connection failed. Please check your internet connectivity.";
+        } else if (err.message) {
+          message = err.message;
+        }
+
+        if (errorMsg) {
+          errorMsg.classList.remove('hidden');
+          errorMsg.textContent = message;
+        }
+      } finally {
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.innerHTML = originalText;
         }
-
-        if (authenticated) {
-          sessionStorage.setItem('ibrahim_admin_logged_in', 'true');
-          if (remember) {
-            localStorage.setItem('ibrahim_admin_remember', 'true');
-          }
-          this.showToast('Login successful. Welcome back, Director.', 'success');
-          this.initAuth();
-        } else {
-          if (errorMsg) {
-            errorMsg.classList.remove('hidden');
-            errorMsg.textContent = 'Invalid credentials. Please verify your email and password.';
-          }
-        }
-      });
-    }
-
-    if (demoBtn) {
-      demoBtn.addEventListener('click', () => {
-        document.getElementById('login-email').value = 'admin@ibrahimenterprise.com';
-        document.getElementById('login-password').value = 'admin123';
-        sessionStorage.setItem('ibrahim_admin_logged_in', 'true');
-        this.showToast('Logged in via Quick Demo access.', 'success');
-        this.initAuth();
-      });
-    }
+      }
+    });
   }
 
   async logout() {
@@ -332,9 +323,6 @@ class AdminApp {
     sessionStorage.removeItem('ibrahim_admin_logged_in');
     localStorage.removeItem('ibrahim_admin_remember');
     this.showToast('Logged out securely.', 'info');
-    setTimeout(() => {
-      window.location.reload();
-    }, 500);
   }
 
   // --- DASHBOARD INIT ---
@@ -1697,9 +1685,19 @@ class AdminApp {
           updatedAt: serverTimestamp ? serverTimestamp() : new Date().toISOString()
         }, { merge: true });
         console.log("[Firebase] Products synchronized to Cloud Firestore successfully.");
+        this.showToast("Commodity catalog synchronized to Live Cloud Firestore.", "success");
+        return true;
+      } else {
+        throw new Error("Firebase Firestore database is not initialized.");
       }
     } catch (err) {
-      console.warn("[Firebase] Product cloud sync note:", err.message);
+      console.error("[Firebase] Product cloud sync error:", err);
+      let note = err.message;
+      if (err.code === 'permission-denied') {
+        note = "Permission denied. Please ensure your new Firestore Rules are published in Firebase Console.";
+      }
+      this.showToast("Live Cloud Sync note: " + note, "warning");
+      return false;
     }
   }
 
@@ -1715,9 +1713,19 @@ class AdminApp {
           updatedAt: serverTimestamp ? serverTimestamp() : new Date().toISOString()
         }, { merge: true });
         console.log("[Firebase] Insights synchronized to Cloud Firestore successfully.");
+        this.showToast("Articles synchronized to Live Cloud Firestore.", "success");
+        return true;
+      } else {
+        throw new Error("Firebase Firestore database is not initialized.");
       }
     } catch (err) {
-      console.warn("[Firebase] Insights cloud sync note:", err.message);
+      console.error("[Firebase] Insights cloud sync error:", err);
+      let note = err.message;
+      if (err.code === 'permission-denied') {
+        note = "Permission denied. Please ensure your new Firestore Rules are published in Firebase Console.";
+      }
+      this.showToast("Live Cloud Sync note: " + note, "warning");
+      return false;
     }
   }
 
@@ -1767,11 +1775,13 @@ class AdminApp {
     try {
       const prods = this.getProducts();
       const inss = this.getInsights();
-      await this.syncProductsToCloud(prods);
-      await this.syncInsightsToCloud(inss);
-      this.showToast(`Published ${prods.length} commodities and ${inss.length} articles to Live Server!`, "success");
+      const pOk = await this.syncProductsToCloud(prods);
+      const iOk = await this.syncInsightsToCloud(inss);
+      if (pOk && iOk) {
+        this.showToast(`Successfully published ${prods.length} commodities & ${inss.length} articles to Live Server!`, "success");
+      }
     } catch (err) {
-      this.showToast("Publish note: " + err.message, "error");
+      this.showToast("Publish notice: " + err.message, "error");
     }
   }
 

@@ -42,21 +42,17 @@ We have integrated real **Firebase Authentication** into `assets/js/services-con
 3. Go to the **Sign-in method** tab.
 4. Click on **Email/Password** and toggle **Enable**, then click **Save**.
 5. Go to the **Users** tab and click **Add user**:
-   - **Email**: `admin@ibrahimenterprise.com` *(or `ibraexim@gmail.com`)*
-   - **Password**: Create a strong password (minimum 8-12 characters).
-
-*(Note: The admin panel also includes a development fallback so you can continue testing offline or before the online user is created).*
+   - Create your official administrator account with your corporate email and strong password.
+6. Go to the **Settings** tab > **Authorized domains**:
+   - Ensure `www.ibrahimexim.com`, `ibrahimexim.com`, and `localhost` are listed in the authorized domains list.
 
 ---
 
 ### 3. Cloud Firestore Security Rules (`firestore.rules`)
 
 We have defined strict rules in [`firestore.rules`](firestore.rules):
-- **Public Visitors**: Can **ONLY create** genuine trade quotes. Every submission is strictly validated:
-  - Must include `fullName`, `email`, `phone`, `product`.
-  - Email format and length bounds are enforced.
-  - Consent must be explicitly `true`.
-- **Read & Delete Protection**: Public users **CANNOT read, list, update, or delete** any customer inquiries. Only authenticated trade desk staff (`admin@ibrahimenterprise.com`, `ibraexim@gmail.com`) can access leads.
+- **Public Visitors**: Can **read** live catalog collections (`catalog`, `products`, `insights`) and can **ONLY create** genuine trade quotes with schema validation.
+- **Admin Full Control**: All write operations across `catalog`, `products`, and `insights`, and read/update/delete operations on `inquiries`, are restricted strictly to authenticated Firebase Auth administrators (`request.auth != null`).
 - **Default Deny**: All other database collections are completely inaccessible.
 
 **To apply in Firebase Console**:

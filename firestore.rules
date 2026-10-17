@@ -24,45 +24,25 @@ service cloud.firestore {
                     && request.resource.data.product.size() >= 2
                     && request.resource.data.consent == true;
 
-      // Only authenticated trade desk staff can view, update status, or archive leads
-      allow read, update, delete: if request.auth != null 
-                                  && request.auth.token.email in [
-                                    'admin@ibrahimexim.com',
-                                    'admin@ibrahimenterprise.com', 
-                                    'ibraexim@gmail.com'
-                                  ];
+      // Only authenticated Firebase Auth admin can view, update status, or archive leads
+      allow read, update, delete: if request.auth != null;
     }
 
-    // 2. Catalog & Content Collection (Products, Insights, Settings)
-    // Public can read live catalog; authenticated admins can update
+    // 2. Catalog & Content Collections (Products, Insights, Settings)
+    // Public visitors worldwide can read live catalog; authenticated Firebase Auth admin can write
     match /catalog/{docId} {
       allow read: if true;
-      allow write: if request.auth != null 
-                   && request.auth.token.email in [
-                     'admin@ibrahimexim.com',
-                     'admin@ibrahimenterprise.com', 
-                     'ibraexim@gmail.com'
-                   ];
+      allow write: if request.auth != null;
     }
 
     match /products/{docId} {
       allow read: if true;
-      allow write: if request.auth != null 
-                   && request.auth.token.email in [
-                     'admin@ibrahimexim.com',
-                     'admin@ibrahimenterprise.com', 
-                     'ibraexim@gmail.com'
-                   ];
+      allow write: if request.auth != null;
     }
 
     match /insights/{docId} {
       allow read: if true;
-      allow write: if request.auth != null 
-                   && request.auth.token.email in [
-                     'admin@ibrahimexim.com',
-                     'admin@ibrahimenterprise.com', 
-                     'ibraexim@gmail.com'
-                   ];
+      allow write: if request.auth != null;
     }
 
     // 3. Default deny for all other collections

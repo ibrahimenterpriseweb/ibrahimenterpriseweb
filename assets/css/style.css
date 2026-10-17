@@ -215,6 +215,111 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ==========================================================================
+   Card & Text Appear Animations (Scroll & Entrance Reveal)
+   ========================================================================== */
+
+/* Resilient initialization: Only animate when reveal-ready is active */
+.reveal-ready .reveal-card {
+  opacity: 0;
+  transform: translateY(28px) scale(0.985);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow var(--transition-normal),
+              border-color var(--transition-normal);
+  will-change: opacity, transform;
+}
+
+.reveal-ready .reveal-card.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Ensure smooth hover after card has appeared */
+.reveal-ready .reveal-card.is-visible:hover,
+.reveal-ready .product-card.is-visible:hover {
+  transform: translateY(-4px) scale(1);
+}
+
+.reveal-ready .reveal-text {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-ready .reveal-text.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-ready .reveal-fade {
+  opacity: 0;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+.reveal-ready .reveal-fade.is-visible {
+  opacity: 1;
+}
+
+/* Stagger delay utility classes */
+.delay-75  { transition-delay: 75ms !important; }
+.delay-100 { transition-delay: 100ms !important; }
+.delay-150 { transition-delay: 150ms !important; }
+.delay-200 { transition-delay: 200ms !important; }
+.delay-250 { transition-delay: 250ms !important; }
+.delay-300 { transition-delay: 300ms !important; }
+.delay-350 { transition-delay: 350ms !important; }
+.delay-400 { transition-delay: 400ms !important; }
+.delay-450 { transition-delay: 450ms !important; }
+.delay-500 { transition-delay: 500ms !important; }
+
+/* Hero Entrance Animations for Instant Aesthetic Impact */
+@keyframes heroFadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroBadgePop {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hero-anim-badge {
+  animation: heroBadgePop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero-anim-title {
+  animation: heroFadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+}
+
+.hero-anim-desc {
+  animation: heroFadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.24s both;
+}
+
+.hero-anim-cta {
+  animation: heroFadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.36s both;
+}
+
+.hero-anim-metrics {
+  animation: heroFadeInUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.48s both;
+}
+
+
+/* ==========================================================================
    Interactive Map & Route Pulsing
    ========================================================================== */
 
@@ -316,6 +421,13 @@ h1, h2, h3, h4, h5, h6 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+  .reveal-ready .reveal-card,
+  .reveal-ready .reveal-text,
+  .reveal-ready .reveal-fade {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 

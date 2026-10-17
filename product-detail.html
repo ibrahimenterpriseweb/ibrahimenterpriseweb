@@ -438,7 +438,7 @@
       if (relGrid) {
         const related = getRelatedProducts(product.relatedSlugs);
         relGrid.innerHTML = related.map(rel => `
-          <div class="product-card group flex flex-col">
+          <div class="product-card reveal-card group flex flex-col">
             <div class="relative aspect-[4/3] overflow-hidden bg-slate-100">
               <img src="${rel.image}" alt="${rel.name}" class="w-full h-full object-cover img-zoom" loading="lazy">
               <div class="absolute top-2 left-2">
@@ -459,6 +459,10 @@
       }
 
       initQuoteTriggers();
+
+      if (window.initScrollReveal) {
+        window.initScrollReveal();
+      }
     });
   </script>
 </body>

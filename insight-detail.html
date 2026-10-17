@@ -231,6 +231,10 @@
       document.getElementById('art-image').src = article.image;
       document.getElementById('art-image').alt = article.title;
       document.getElementById('art-content').innerHTML = article.content;
+
+      if (window.initScrollReveal) {
+        window.initScrollReveal();
+      }
     });
   </script>
 </body>

@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initActiveNavLink();
   initQuoteTriggers();
   initFloatingCommsAndChatbot();
+  initScrollReveal();
 });
 
 // Sticky Header logic
@@ -353,3 +354,78 @@ function initFloatingCommsAndChatbot() {
     }, 300);
   });
 }
+
+// =========================================================================
+// Card & Text Scroll Reveal Controller
+// =========================================================================
+function initScrollReveal() {
+  // If user prefers reduced motion or IntersectionObserver is unsupported, show everything immediately
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+    document.documentElement.classList.add('reveal-ready');
+    document.querySelectorAll('.reveal-card, .reveal-text, .reveal-fade, .product-card').forEach(el => {
+      el.classList.add('is-visible');
+    });
+    return;
+  }
+
+  // Activate CSS rules safely
+  document.documentElement.classList.add('reveal-ready');
+
+  // Automatic smart detection:
+  // 1. Tag any untagged product cards
+  document.querySelectorAll('.product-card:not(.reveal-card)').forEach(card => {
+    card.classList.add('reveal-card');
+  });
+
+  // 2. Tag cards inside grids across main content (e.g. metrics, value propositions, steps)
+  document.querySelectorAll('main section .grid > div, main section .grid > article').forEach(card => {
+    if (!card.classList.contains('reveal-card') && !card.classList.contains('reveal-text') && !card.id.includes('container') && !card.classList.contains('contents')) {
+      card.classList.add('reveal-card');
+    }
+  });
+
+  // 3. Tag section headings across main content
+  document.querySelectorAll('main section h2:not(.reveal-text), main section .section-title:not(.reveal-text)').forEach(heading => {
+    if (!heading.closest('.reveal-card') && !heading.closest('.product-card')) {
+      heading.classList.add('reveal-text');
+    }
+  });
+
+  // 4. Automatically calculate stagger delays for sibling cards in the same grid
+  document.querySelectorAll('.grid').forEach(grid => {
+    const cards = Array.from(grid.children).filter(el => el.classList.contains('reveal-card'));
+    if (cards.length > 1) {
+      cards.forEach((card, idx) => {
+        // if no explicit delay class or data-delay exists
+        if (!card.dataset.delay && !card.className.includes('delay-')) {
+          const delay = Math.min((idx % 4) * 85, 340); // cascade in waves per row
+          if (delay > 0) {
+            card.style.transitionDelay = `${delay}ms`;
+          }
+        }
+      });
+    }
+  });
+
+  // IntersectionObserver configuration
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px 0px -30px 0px',
+    threshold: 0.08
+  };
+
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  const targets = document.querySelectorAll('.reveal-card:not(.is-visible), .reveal-text:not(.is-visible), .reveal-fade:not(.is-visible)');
+  targets.forEach(target => observer.observe(target));
+}
+
+// Make accessible globally so dynamic pages (products.html, insights.html) can re-trigger on render
+window.initScrollReveal = initScrollReveal;

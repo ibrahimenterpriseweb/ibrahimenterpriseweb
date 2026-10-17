@@ -209,6 +209,25 @@ class AdminApp {
       if (appSection) appSection.classList.add('hidden');
       this.bindLoginForm();
     }
+
+    // Auto-sync with Firebase Auth state
+    if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
+      window.SERVICES_CONFIG.readyPromise.then(() => {
+        if (window.SERVICES_CONFIG.auth && window.SERVICES_CONFIG.authMod) {
+          const { onAuthStateChanged } = window.SERVICES_CONFIG.authMod;
+          if (typeof onAuthStateChanged === 'function') {
+            onAuthStateChanged(window.SERVICES_CONFIG.auth, (user) => {
+              if (user && !isAuth) {
+                sessionStorage.setItem('ibrahim_admin_logged_in', 'true');
+                if (loginSection) loginSection.classList.add('hidden');
+                if (appSection) appSection.classList.remove('hidden');
+                this.initDashboard();
+              }
+            });
+          }
+        }
+      });
+    }
   }
 
   bindLoginForm() {
@@ -217,15 +236,53 @@ class AdminApp {
     const errorMsg = document.getElementById('login-error');
 
     if (form) {
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const email = document.getElementById('login-email').value.trim();
         const pass = document.getElementById('login-password').value;
         const remember = document.getElementById('login-remember')?.checked;
 
-        // Default admin credentials
-        const validEmails = ['admin@ibrahimenterprise.com', 'admin@ibrahimenterprise.com', 'ibraexim@gmail.com'];
-        if (validEmails.includes(email.toLowerCase()) && pass === 'admin123') {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn ? submitBtn.innerHTML : 'Sign In';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<span class="inline-block animate-spin mr-2">◌</span> Authenticating...';
+        }
+
+        let authenticated = false;
+
+        // 1. Try Firebase Official Authentication if available
+        try {
+          if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
+            await window.SERVICES_CONFIG.readyPromise;
+          }
+          if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.auth && window.SERVICES_CONFIG.authMod) {
+            const { signInWithEmailAndPassword } = window.SERVICES_CONFIG.authMod;
+            if (typeof signInWithEmailAndPassword === 'function') {
+              const userCredential = await signInWithEmailAndPassword(window.SERVICES_CONFIG.auth, email, pass);
+              if (userCredential && userCredential.user) {
+                authenticated = true;
+                console.log("[Firebase] Authenticated staff user:", userCredential.user.email);
+              }
+            }
+          }
+        } catch (firebaseErr) {
+          console.warn("[Firebase] Cloud authentication note:", firebaseErr.code || firebaseErr.message);
+        }
+
+        // 2. Local fallback credentials check (for offline/demo preview)
+        const validEmails = ['admin@ibrahimexim.com', 'admin@ibrahimenterprise.com', 'ibraexim@gmail.com'];
+        if (!authenticated && validEmails.includes(email.toLowerCase()) && pass === 'admin123') {
+          authenticated = true;
+          console.log("[Admin] Logged in via local development credentials.");
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
+
+        if (authenticated) {
           sessionStorage.setItem('ibrahim_admin_logged_in', 'true');
           if (remember) {
             localStorage.setItem('ibrahim_admin_remember', 'true');
@@ -235,7 +292,7 @@ class AdminApp {
         } else {
           if (errorMsg) {
             errorMsg.classList.remove('hidden');
-            errorMsg.textContent = 'Invalid credentials. Please use admin@ibrahimenterprise.com and admin123';
+            errorMsg.textContent = 'Invalid credentials. Please verify your email and password.';
           }
         }
       });
@@ -252,13 +309,23 @@ class AdminApp {
     }
   }
 
-  logout() {
+  async logout() {
+    try {
+      if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.auth && window.SERVICES_CONFIG.authMod) {
+        const { signOut } = window.SERVICES_CONFIG.authMod;
+        if (typeof signOut === 'function') {
+          await signOut(window.SERVICES_CONFIG.auth);
+        }
+      }
+    } catch (e) {
+      console.warn("Auth sign-out notice:", e);
+    }
     sessionStorage.removeItem('ibrahim_admin_logged_in');
     localStorage.removeItem('ibrahim_admin_remember');
     this.showToast('Logged out securely.', 'info');
     setTimeout(() => {
       window.location.reload();
-    }, 400);
+    }, 500);
   }
 
   // --- DASHBOARD INIT ---

@@ -1,62 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Core Pages -->
   <url>
-    <loc>https://www.ibrahimenterprise.com/</loc>
-    <lastmod>2026-10-14</lastmod>
+    <loc>https://www.ibrahimexim.com/</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.ibrahimenterprise.com/products.html</loc>
-    <lastmod>2026-10-14</lastmod>
+    <loc>https://www.ibrahimexim.com/products.html</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.ibrahimenterprise.com/trade.html</loc>
-    <lastmod>2026-10-14</lastmod>
+    <loc>https://www.ibrahimexim.com/trade.html</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/markets.html</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ibrahimenterprise.com/markets.html</loc>
-    <lastmod>2026-10-14</lastmod>
+    <loc>https://www.ibrahimexim.com/quality.html</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ibrahimenterprise.com/quality.html</loc>
-    <lastmod>2026-10-14</lastmod>
+    <loc>https://www.ibrahimexim.com/about.html</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ibrahimenterprise.com/about.html</loc>
-    <lastmod>2026-10-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.ibrahimenterprise.com/insights.html</loc>
-    <lastmod>2026-10-14</lastmod>
+    <loc>https://www.ibrahimexim.com/insights.html</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.ibrahimenterprise.com/contact.html</loc>
-    <lastmod>2026-10-14</lastmod>
+    <loc>https://www.ibrahimexim.com/contact.html</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
+
+  <!-- Commodity Products -->
   <url>
-    <loc>https://www.ibrahimenterprise.com/privacy.html</loc>
-    <lastmod>2026-10-14</lastmod>
+    <loc>https://www.ibrahimexim.com/product-detail.html?slug=hing-asafoetida</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/product-detail.html?slug=basmati-rice</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/product-detail.html?slug=black-pepper</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/product-detail.html?slug=cardamom</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/product-detail.html?slug=coconut-powder</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/product-detail.html?slug=onion-powder</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/product-detail.html?slug=fresh-vegetables</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/product-detail.html?slug=seafood</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Trade Insights & Articles -->
+  <url>
+    <loc>https://www.ibrahimexim.com/insight-detail.html?slug=afghanistan-hing-trade-dynamics</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/insight-detail.html?slug=basmati-rice-export-protocols</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/insight-detail.html?slug=perishable-cold-chain-logistics</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://www.ibrahimexim.com/insight-detail.html?slug=dubai-agricultural-hub-strategy</loc>
+    <lastmod>2026-10-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- Legal & Policies -->
+  <url>
+    <loc>https://www.ibrahimexim.com/privacy.html</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.ibrahimenterprise.com/terms.html</loc>
-    <lastmod>2026-10-14</lastmod>
+    <loc>https://www.ibrahimexim.com/terms.html</loc>
+    <lastmod>2026-10-17</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

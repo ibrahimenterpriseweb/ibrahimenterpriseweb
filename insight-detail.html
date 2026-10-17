@@ -5,7 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="art-meta-title">Trade Insight — Ibrahim Enterprise</title>
   <meta name="description" id="art-meta-desc" content="Read commercial commodity trade perspectives from Ibrahim Enterprise.">
-  <link rel="canonical" id="art-meta-canonical" href="https://www.ibrahimenterprise.com/insight-detail.html">
+  <link rel="canonical" id="art-meta-canonical" href="https://www.ibrahimexim.com/insight-detail.html">
+
+  <!-- Open Graph & Twitter -->
+  <meta property="og:site_name" content="Ibrahim Enterprise">
+  <meta property="og:type" content="article">
+  <meta property="og:url" id="og-art-url" content="https://www.ibrahimexim.com/insight-detail.html">
+  <meta property="og:title" id="og-art-title" content="Trade Insight — Ibrahim Enterprise">
+  <meta property="og:description" id="og-art-desc" content="Read commercial commodity trade perspectives from Ibrahim Enterprise.">
+  <meta property="og:image" id="og-art-image" content="https://www.ibrahimexim.com/assets/images/dubai-expansion.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" id="tw-art-title" content="Trade Insight — Ibrahim Enterprise">
+  <meta name="twitter:description" id="tw-art-desc" content="Read commercial commodity trade perspectives from Ibrahim Enterprise.">
+  <meta name="twitter:image" id="tw-art-image" content="https://www.ibrahimexim.com/assets/images/dubai-expansion.jpg">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,6 +48,14 @@
     }
   </script>
   <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Microsoft Clarity Tracking -->
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "yz1b4hl6cw");
+  </script>
 </head>
 <body class="bg-white text-slate-800 antialiased flex flex-col min-h-screen">
 
@@ -218,9 +238,31 @@
       const slug = urlParams.get('slug') || 'afghanistan-hing-trade-dynamics';
       const article = getInsightBySlug(slug) || INSIGHTS[0];
 
-      document.title = `${article.title} | Ibrahim Enterprise Insights`;
+      const pageTitle = `${article.title} | Ibrahim Enterprise Insights`;
+      const fullUrl = `https://www.ibrahimexim.com/insight-detail.html?slug=${encodeURIComponent(slug)}`;
+      const fullImg = article.image ? (article.image.startsWith('http') ? article.image : `https://www.ibrahimexim.com/${article.image.replace(/^\//, '')}`) : 'https://www.ibrahimexim.com/assets/images/dubai-expansion.jpg';
+
+      document.title = pageTitle;
       const metaDesc = document.getElementById('art-meta-desc');
       if (metaDesc) metaDesc.setAttribute('content', article.excerpt);
+
+      const artCanon = document.getElementById('art-meta-canonical');
+      if (artCanon) artCanon.setAttribute('href', fullUrl);
+      const ogUrl = document.getElementById('og-art-url');
+      if (ogUrl) ogUrl.setAttribute('content', fullUrl);
+      const ogTitle = document.getElementById('og-art-title');
+      if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+      const ogDesc = document.getElementById('og-art-desc');
+      if (ogDesc) ogDesc.setAttribute('content', article.excerpt);
+      const ogImg = document.getElementById('og-art-image');
+      if (ogImg) ogImg.setAttribute('content', fullImg);
+
+      const twTitle = document.getElementById('tw-art-title');
+      if (twTitle) twTitle.setAttribute('content', pageTitle);
+      const twDesc = document.getElementById('tw-art-desc');
+      if (twDesc) twDesc.setAttribute('content', article.excerpt);
+      const twImg = document.getElementById('tw-art-image');
+      if (twImg) twImg.setAttribute('content', fullImg);
 
       document.getElementById('breadcrumb-title').textContent = article.title;
       document.getElementById('art-category').textContent = article.category;

@@ -95,7 +95,7 @@ npx wrangler pages deploy . --project-name=ibrahimenterprise
 
 ### Custom Domain & HTTPS
 1. In Cloudflare Dashboard, navigate to **Pages** > **ibrahimenterprise** > **Custom Domains**.
-2. Add the client's confirmed production domain (e.g. `ibrahimenterprise.com` or `www.ibrahimenterprise.com`).
+2. Add the client's confirmed production domain (e.g. `ibrahimenterprise.com` or `www.ibrahimexim.com`).
 3. Cloudflare will automatically provision Universal SSL/TLS (HTTPS) certificates.
 4. Verify root to `www` redirection.
 

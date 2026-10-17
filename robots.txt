@@ -2,4 +2,5 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
-Sitemap: https://www.ibrahimenterprise.com/sitemap.xml
+Sitemap: https://www.ibrahimexim.com/sitemap.xml
+Host: https://www.ibrahimexim.com

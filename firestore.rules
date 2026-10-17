@@ -25,12 +25,17 @@ service cloud.firestore {
                     && request.resource.data.consent == true;
 
       // Only authenticated trade desk staff can view, update status, or archive leads
-      allow read, update, delete: if request.auth != null;
+      allow read, update, delete: if request.auth != null 
+                                  && request.auth.token.email in [
+                                    'admin@ibrahimexim.com',
+                                    'admin@ibrahimenterprise.com', 
+                                    'ibraexim@gmail.com'
+                                  ];
     }
 
     // 2. Default deny for all other collections
     match /{document=**} {
-      allow read, write: false;
+      allow read, write: if false;
     }
   }
 }

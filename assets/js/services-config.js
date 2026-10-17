@@ -61,17 +61,22 @@
   async function initFirebaseServices() {
     try {
       // Dynamic import of Firebase modules
-      const [appMod, firestoreMod, analyticsMod] = await Promise.all([
+      const [appMod, firestoreMod, analyticsMod, authMod] = await Promise.all([
         import("https://www.gstatic.com/firebasejs/13.0.0/firebase-app.js"),
         import("https://www.gstatic.com/firebasejs/13.0.0/firebase-firestore.js"),
         import("https://www.gstatic.com/firebasejs/13.0.0/firebase-analytics.js").catch(e => {
           console.warn("[Firebase] Analytics module optional or blocked:", e.message);
+          return null;
+        }),
+        import("https://www.gstatic.com/firebasejs/13.0.0/firebase-auth.js").catch(e => {
+          console.warn("[Firebase] Auth module optional or blocked:", e.message);
           return null;
         })
       ]);
 
       const app = appMod.initializeApp(firebaseConfig);
       const db = firestoreMod.getFirestore(app);
+      const auth = authMod && typeof authMod.getAuth === 'function' ? authMod.getAuth(app) : null;
 
       let analytics = null;
       if (analyticsMod && typeof analyticsMod.isSupported === 'function') {
@@ -84,17 +89,19 @@
 
       window.SERVICES_CONFIG.app = app;
       window.SERVICES_CONFIG.db = db;
+      window.SERVICES_CONFIG.auth = auth;
       window.SERVICES_CONFIG.analytics = analytics;
       window.SERVICES_CONFIG.firestoreMod = firestoreMod;
       window.SERVICES_CONFIG.analyticsMod = analyticsMod;
+      window.SERVICES_CONFIG.authMod = authMod;
       window.SERVICES_CONFIG.isInitialized = true;
 
       // Dispatch event for components listening for Firebase readiness
       window.dispatchEvent(new CustomEvent('firebase:ready', {
-        detail: { app, db, analytics, config: firebaseConfig }
+        detail: { app, db, auth, analytics, config: firebaseConfig }
       }));
 
-      return { app, db, analytics };
+      return { app, db, auth, analytics };
     } catch (err) {
       console.warn("[Firebase] Initialization notice (running in offline/fallback mode):", err.message);
       return null;

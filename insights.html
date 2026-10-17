@@ -202,10 +202,11 @@
     </div>
   </footer>
 
+  <script src="assets/js/services-config.js"></script>
   <script src="assets/js/insights-data.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    function renderInsights() {
       const grid = document.getElementById('insights-grid');
       if (!grid) return;
 
@@ -247,7 +248,10 @@
       if (window.initScrollReveal) {
         window.initScrollReveal();
       }
-    });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderInsights);
+    window.addEventListener('insights:updated', renderInsights);
   </script>
 </body>
 </html>

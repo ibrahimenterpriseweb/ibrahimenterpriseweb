@@ -230,13 +230,15 @@
     </div>
   </footer>
 
+  <script src="assets/js/services-config.js"></script>
   <script src="assets/js/insights-data.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    function renderInsightDetail() {
       const urlParams = new URLSearchParams(window.location.search);
       const slug = urlParams.get('slug') || 'afghanistan-hing-trade-dynamics';
       const article = getInsightBySlug(slug) || INSIGHTS[0];
+      if (!article) return;
 
       const pageTitle = `${article.title} | Ibrahim Enterprise Insights`;
       const fullUrl = `https://www.ibrahimexim.com/insight-detail.html?slug=${encodeURIComponent(slug)}`;
@@ -277,7 +279,10 @@
       if (window.initScrollReveal) {
         window.initScrollReveal();
       }
-    });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderInsightDetail);
+    window.addEventListener('insights:updated', renderInsightDetail);
   </script>
 </body>
 </html>

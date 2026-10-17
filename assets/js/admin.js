@@ -141,6 +141,13 @@ class AdminApp {
     if (!existingSettings || existingSettings.includes('ibrahimgroupss@gmail.com') || existingSettings.includes('Neelangarai')) {
       localStorage.setItem('ibrahim_admin_settings', JSON.stringify(DEFAULT_SETTINGS));
     }
+
+    // Auto-sync live catalog from Cloud Firestore if available
+    if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
+      window.SERVICES_CONFIG.readyPromise.then(() => {
+        this.syncCatalogFromCloud(true);
+      });
+    }
   }
 
   getInquiries() {
@@ -166,6 +173,7 @@ class AdminApp {
 
   saveProducts(list) {
     localStorage.setItem('ibrahim_custom_products', JSON.stringify(list));
+    this.syncProductsToCloud(list);
   }
 
   getInsights() {
@@ -178,6 +186,7 @@ class AdminApp {
 
   saveInsights(list) {
     localStorage.setItem('ibrahim_custom_insights', JSON.stringify(list));
+    this.syncInsightsToCloud(list);
   }
 
   getSettings() {
@@ -1673,6 +1682,96 @@ class AdminApp {
         syncBtn.disabled = false;
         syncBtn.innerHTML = originalHtml;
       }
+    }
+  }
+
+  async syncProductsToCloud(list) {
+    try {
+      if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
+        await window.SERVICES_CONFIG.readyPromise;
+      }
+      if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.db && window.SERVICES_CONFIG.firestoreMod) {
+        const { doc, setDoc, serverTimestamp } = window.SERVICES_CONFIG.firestoreMod;
+        await setDoc(doc(window.SERVICES_CONFIG.db, "catalog", "products"), {
+          items: list,
+          updatedAt: serverTimestamp ? serverTimestamp() : new Date().toISOString()
+        }, { merge: true });
+        console.log("[Firebase] Products synchronized to Cloud Firestore successfully.");
+      }
+    } catch (err) {
+      console.warn("[Firebase] Product cloud sync note:", err.message);
+    }
+  }
+
+  async syncInsightsToCloud(list) {
+    try {
+      if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
+        await window.SERVICES_CONFIG.readyPromise;
+      }
+      if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.db && window.SERVICES_CONFIG.firestoreMod) {
+        const { doc, setDoc, serverTimestamp } = window.SERVICES_CONFIG.firestoreMod;
+        await setDoc(doc(window.SERVICES_CONFIG.db, "catalog", "insights"), {
+          items: list,
+          updatedAt: serverTimestamp ? serverTimestamp() : new Date().toISOString()
+        }, { merge: true });
+        console.log("[Firebase] Insights synchronized to Cloud Firestore successfully.");
+      }
+    } catch (err) {
+      console.warn("[Firebase] Insights cloud sync note:", err.message);
+    }
+  }
+
+  async syncCatalogFromCloud(isSilent = true) {
+    try {
+      if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
+        await window.SERVICES_CONFIG.readyPromise;
+      }
+      if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.db && window.SERVICES_CONFIG.firestoreMod) {
+        const { doc, getDoc } = window.SERVICES_CONFIG.firestoreMod;
+
+        const prodSnap = await getDoc(doc(window.SERVICES_CONFIG.db, "catalog", "products"));
+        if (prodSnap.exists()) {
+          const data = prodSnap.data();
+          if (data && Array.isArray(data.items) && data.items.length > 0) {
+            localStorage.setItem('ibrahim_custom_products', JSON.stringify(data.items));
+            this.products = data.items;
+          }
+        }
+
+        const insSnap = await getDoc(doc(window.SERVICES_CONFIG.db, "catalog", "insights"));
+        if (insSnap.exists()) {
+          const data = insSnap.data();
+          if (data && Array.isArray(data.items) && data.items.length > 0) {
+            localStorage.setItem('ibrahim_custom_insights', JSON.stringify(data.items));
+            this.insights = data.items;
+          }
+        }
+
+        if (!isSilent) {
+          this.showToast("Loaded latest live catalog from Cloud Firestore.", "success");
+          this.renderProducts();
+          this.renderInsights();
+          this.renderOverview();
+        }
+      }
+    } catch (e) {
+      console.warn("[Admin Sync] Cloud catalog read notice:", e.message);
+      if (!isSilent) {
+        this.showToast("Could not load from cloud: " + e.message, "info");
+      }
+    }
+  }
+
+  async pushAllLocalToCloud() {
+    this.showToast("Publishing local catalog to Cloud Firestore...", "info");
+    try {
+      const prods = this.getProducts();
+      const inss = this.getInsights();
+      await this.syncProductsToCloud(prods);
+      await this.syncInsightsToCloud(inss);
+      this.showToast(`Published ${prods.length} commodities and ${inss.length} articles to Live Server!`, "success");
+    } catch (err) {
+      this.showToast("Publish note: " + err.message, "error");
     }
   }
 

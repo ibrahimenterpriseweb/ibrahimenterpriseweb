@@ -223,3 +223,37 @@ function getRelatedProducts(relatedSlugs) {
   if (!relatedSlugs || !relatedSlugs.length) return PRODUCTS.slice(0, 3);
   return PRODUCTS.filter(p => relatedSlugs.includes(p.slug));
 }
+
+// Live Cloud Sync from Cloud Firestore
+async function syncProductsFromCloud() {
+  try {
+    if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
+      await window.SERVICES_CONFIG.readyPromise;
+    }
+    if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.db && window.SERVICES_CONFIG.firestoreMod) {
+      const { doc, getDoc } = window.SERVICES_CONFIG.firestoreMod;
+      const docSnap = await getDoc(doc(window.SERVICES_CONFIG.db, "catalog", "products"));
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data && Array.isArray(data.items) && data.items.length > 0) {
+          PRODUCTS.splice(0, PRODUCTS.length, ...data.items);
+          localStorage.setItem('ibrahim_custom_products', JSON.stringify(data.items));
+          window.dispatchEvent(new CustomEvent('products:updated', { detail: PRODUCTS }));
+          console.log("[Firebase] Live product catalog synchronized from Cloud Firestore:", PRODUCTS.length, "items.");
+        }
+      }
+    }
+  } catch (err) {
+    console.warn("[Catalog] Running with cached/default product catalog:", err.message);
+  }
+}
+
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncProductsFromCloud);
+  } else {
+    syncProductsFromCloud();
+  }
+  window.addEventListener('firebase:ready', syncProductsFromCloud);
+  window.syncProductsFromCloud = syncProductsFromCloud;
+}

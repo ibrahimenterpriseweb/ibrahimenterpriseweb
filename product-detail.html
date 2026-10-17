@@ -405,10 +405,11 @@
 
   <script>
     // Dynamic Product Detail Loader
-    document.addEventListener('DOMContentLoaded', () => {
+    function renderProductDetail() {
       const urlParams = new URLSearchParams(window.location.search);
       const slug = urlParams.get('slug') || 'hing-asafoetida';
       const product = getProductBySlug(slug) || PRODUCTS[0];
+      if (!product) return;
 
       // Update meta, title, canonical and social cards
       const pageTitle = `${product.name} — Commodity Specifications | Ibrahim Enterprise`;
@@ -507,7 +508,10 @@
       if (window.initScrollReveal) {
         window.initScrollReveal();
       }
-    });
+    }
+
+    document.addEventListener('DOMContentLoaded', renderProductDetail);
+    window.addEventListener('products:updated', renderProductDetail);
   </script>
 </body>
 </html>

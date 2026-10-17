@@ -135,3 +135,37 @@ const INSIGHTS = getStoredInsights();
 function getInsightBySlug(slug) {
   return INSIGHTS.find(item => item.slug === slug);
 }
+
+// Live Cloud Sync from Cloud Firestore
+async function syncInsightsFromCloud() {
+  try {
+    if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
+      await window.SERVICES_CONFIG.readyPromise;
+    }
+    if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.db && window.SERVICES_CONFIG.firestoreMod) {
+      const { doc, getDoc } = window.SERVICES_CONFIG.firestoreMod;
+      const docSnap = await getDoc(doc(window.SERVICES_CONFIG.db, "catalog", "insights"));
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data && Array.isArray(data.items) && data.items.length > 0) {
+          INSIGHTS.splice(0, INSIGHTS.length, ...data.items);
+          localStorage.setItem('ibrahim_custom_insights', JSON.stringify(data.items));
+          window.dispatchEvent(new CustomEvent('insights:updated', { detail: INSIGHTS }));
+          console.log("[Firebase] Live trade insights synchronized from Cloud Firestore:", INSIGHTS.length, "items.");
+        }
+      }
+    }
+  } catch (err) {
+    console.warn("[Insights] Running with cached/default trade intelligence:", err.message);
+  }
+}
+
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncInsightsFromCloud);
+  } else {
+    syncInsightsFromCloud();
+  }
+  window.addEventListener('firebase:ready', syncInsightsFromCloud);
+  window.syncInsightsFromCloud = syncInsightsFromCloud;
+}

@@ -33,7 +33,39 @@ service cloud.firestore {
                                   ];
     }
 
-    // 2. Default deny for all other collections
+    // 2. Catalog & Content Collection (Products, Insights, Settings)
+    // Public can read live catalog; authenticated admins can update
+    match /catalog/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null 
+                   && request.auth.token.email in [
+                     'admin@ibrahimexim.com',
+                     'admin@ibrahimenterprise.com', 
+                     'ibraexim@gmail.com'
+                   ];
+    }
+
+    match /products/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null 
+                   && request.auth.token.email in [
+                     'admin@ibrahimexim.com',
+                     'admin@ibrahimenterprise.com', 
+                     'ibraexim@gmail.com'
+                   ];
+    }
+
+    match /insights/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null 
+                   && request.auth.token.email in [
+                     'admin@ibrahimexim.com',
+                     'admin@ibrahimenterprise.com', 
+                     'ibraexim@gmail.com'
+                   ];
+    }
+
+    // 3. Default deny for all other collections
     match /{document=**} {
       allow read, write: if false;
     }

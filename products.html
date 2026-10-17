@@ -414,6 +414,13 @@
       });
 
       renderProducts(initialCat);
+
+      // Auto re-render when live updates arrive from Cloud Firestore
+      window.addEventListener('products:updated', () => {
+        const activeBtn = document.querySelector('.category-btn.bg-\\[\\#0fa14a\\]');
+        const activeCat = activeBtn ? activeBtn.getAttribute('data-category') : 'All';
+        renderProducts(activeCat || 'All');
+      });
     });
   </script>
 </body>

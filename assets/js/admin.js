@@ -3,94 +3,8 @@
  * Powers the trade operations dashboard, B2B lead CRM, catalog manager, insights editor & settings.
  */
 
-// Initial Seed Inquiries for demo/first load if empty
-const INITIAL_INQUIRIES = [
-  {
-    id: "INQ-9482A",
-    fullName: "Tariq Al-Mansoor",
-    companyName: "Al-Khaleej Spice & Food Imports LLC",
-    email: "t.mansoor@alkhaleejfoods.ae",
-    phone: "+971 50 839 2011",
-    country: "United Arab Emirates",
-    inquiryType: "Hing Import Inquiry",
-    product: "Pure Hing / Asafoetida",
-    quantity: "10",
-    unit: "Metric Tons (MT)",
-    destination: "Jebel Ali Port, Dubai",
-    message: "Seeking direct supply of Grade-A raw Afghan Asafoetida tears. Please share CIF Jebel Ali quotation and COA for volatile oil content.",
-    status: "Quoted",
-    notes: "Quotation sent on 14 Oct 2026. CIF USD 4,200/MT for raw crystalline tears. Awaiting buyer confirmation of irrevocable LC.",
-    timestamp: "2026-10-14T09:30:00.000Z"
-  },
-  {
-    id: "INQ-8823B",
-    fullName: "Marcus Vance",
-    companyName: "Vance & Sterling Commodity Brokers",
-    email: "m.vance@vs-commodities.co.uk",
-    phone: "+44 20 7946 0912",
-    country: "United Kingdom",
-    inquiryType: "Export Consignment",
-    product: "Basmati Rice",
-    quantity: "5",
-    unit: "Containers (FCL)",
-    destination: "Port of Felixstowe, UK",
-    message: "Looking for 1121 Golden Sella Basmati in 20kg private-label BOPP bags. Require UK MRL compliance certificate and fumigation guarantee.",
-    status: "In Review",
-    notes: "Reviewing miller batch test reports for EU/UK MRL compliance. Trade desk preparing FOB Chennai & CIF Felixstowe pricing.",
-    timestamp: "2026-10-15T11:45:00.000Z"
-  },
-  {
-    id: "INQ-7719C",
-    fullName: "Dinesh Perera",
-    companyName: "Lanka Wholesale Food Distributors",
-    email: "dinesh@lankafoods.lk",
-    phone: "+94 77 123 4567",
-    country: "Sri Lanka",
-    inquiryType: "Export Consignment",
-    product: "Fresh Agricultural Produce & Vegetables",
-    quantity: "2",
-    unit: "Containers (FCL)",
-    destination: "Colombo Port",
-    message: "Urgent shipment of Nashik/Tamil Nadu red onions and green chillies in 40ft reefer containers. Target shipment within 7 days.",
-    status: "New",
-    notes: "",
-    timestamp: "2026-10-16T08:15:00.000Z"
-  },
-  {
-    id: "INQ-6604D",
-    fullName: "Sarah Chen",
-    companyName: "Pacific Marine & Frozen Provisions",
-    email: "sarah.chen@pacificmarine.sg",
-    phone: "+65 6789 0123",
-    country: "Singapore",
-    inquiryType: "Export Consignment",
-    product: "Export Marine Seafood",
-    quantity: "1",
-    unit: "Containers (FCL)",
-    destination: "Jurong Port, Singapore",
-    message: "Need 20 MT blast-frozen Vannamei Prawns 30/40 count and cuttlefish whole cleaned. Delivery needed by mid-November.",
-    status: "Closed",
-    notes: "Contract finalized. 30% advance received, balance against BL copy. Reefer booking confirmed on Maersk line.",
-    timestamp: "2026-10-12T14:20:00.000Z"
-  },
-  {
-    id: "INQ-5521E",
-    fullName: "Heinrich Weber",
-    companyName: "Hanseatic Spice Imports GmbH",
-    email: "h.weber@hanseatic-spices.de",
-    phone: "+49 40 555 0192",
-    country: "Germany",
-    inquiryType: "Export Consignment",
-    product: "Black Pepper",
-    quantity: "15",
-    unit: "Metric Tons (MT)",
-    destination: "Port of Hamburg",
-    message: "Interested in Tellicherry bold sun-dried black peppercorns (TGSEB grade). Need lab certificate with piperine and moisture levels.",
-    status: "New",
-    notes: "",
-    timestamp: "2026-10-16T14:10:00.000Z"
-  }
-];
+// Initial Inquiries collection (Empty by default — populated strictly from live Cloud Firestore)
+const INITIAL_INQUIRIES = [];
 
 // Default Company Settings
 const DEFAULT_SETTINGS = {
@@ -121,9 +35,25 @@ class AdminApp {
 
   // --- DATA INITIALIZATION & SYNC ---
   initData() {
-    // 1. Inquiries
-    if (!localStorage.getItem('ibrahim_inquiries')) {
-      localStorage.setItem('ibrahim_inquiries', JSON.stringify(INITIAL_INQUIRIES));
+    // 1. Inquiries - Strict live sync, purge legacy mock leads from storage
+    try {
+      const existing = localStorage.getItem('ibrahim_inquiries');
+      if (existing) {
+        const parsed = JSON.parse(existing);
+        const filtered = Array.isArray(parsed) ? parsed.filter(item => 
+          !['INQ-9482A', 'INQ-8823B', 'INQ-7719C', 'INQ-6604D', 'INQ-5521E'].includes(item.id) &&
+          item.email !== 't.mansoor@alkhaleejfoods.ae' &&
+          item.email !== 'm.vance@vs-commodities.co.uk' &&
+          item.email !== 'dinesh@lankafoods.lk' &&
+          item.email !== 'sarah.chen@pacificmarine.sg' &&
+          item.email !== 'h.weber@hanseatic-spices.de'
+        ) : [];
+        localStorage.setItem('ibrahim_inquiries', JSON.stringify(filtered));
+      } else {
+        localStorage.setItem('ibrahim_inquiries', JSON.stringify([]));
+      }
+    } catch (e) {
+      localStorage.setItem('ibrahim_inquiries', JSON.stringify([]));
     }
 
     // 2. Products
@@ -521,14 +451,32 @@ class AdminApp {
     const height = rect.height;
     ctx.clearRect(0, 0, width, height);
 
-    // Mock 6-month historical timeline data culminating in current month
-    const months = ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'];
-    const values = [12, 18, 22, 29, 36, inquiries.length > 35 ? inquiries.length : 42];
+    // Compute genuine monthly distribution from live inquiry timestamps
+    const now = new Date();
+    const months = [];
+    const monthKeys = [];
+    for (let i = 5; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      months.push(d.toLocaleDateString('en-US', { month: 'short' }));
+      monthKeys.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`);
+    }
+
+    const values = monthKeys.map(key => {
+      return inquiries.filter(inq => {
+        const rawDate = inq.timestamp || inq.createdAt;
+        if (!rawDate) return false;
+        const d = new Date(rawDate);
+        if (isNaN(d.getTime())) return false;
+        const inqKey = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+        return inqKey === key;
+      }).length;
+    });
 
     const padding = { top: 20, right: 20, bottom: 30, left: 35 };
     const chartW = width - padding.left - padding.right;
     const chartH = height - padding.top - padding.bottom;
-    const maxVal = Math.max(...values) * 1.2;
+    const highestVal = Math.max(...values, 0);
+    const maxVal = highestVal > 0 ? Math.ceil(highestVal * 1.3) : 5;
 
     // Draw gridlines
     ctx.strokeStyle = '#f1f5f9';
@@ -1290,51 +1238,16 @@ class AdminApp {
   }
 
   downloadFullBackup() {
-    const backup = {
-      version: '1.0.0',
-      exportDate: new Date().toISOString(),
-      inquiries: this.getInquiries(),
-      products: this.getProducts(),
-      insights: this.getInsights(),
-      settings: this.getSettings()
-    };
-    this.downloadJSON(backup, `Ibrahim_Enterprise_Full_Backup_${new Date().toISOString().slice(0, 10)}.json`);
-    this.showToast('Full system backup downloaded.', 'success');
+    this.showToast('Direct file download is locked. Live data is secured automatically via Cloud Firestore.', 'info');
   }
 
   triggerRestoreFile() {
-    const input = document.getElementById('restore-file-input');
-    if (input) input.click();
+    this.showToast('Restore operation is locked to prevent accidental overwrites of live buyer inquiries.', 'warning');
   }
 
   handleRestoreFile(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const data = JSON.parse(event.target.result);
-        if (data.inquiries && Array.isArray(data.inquiries)) {
-          this.saveInquiries(data.inquiries);
-        }
-        if (data.products && Array.isArray(data.products)) {
-          this.saveProducts(data.products);
-        }
-        if (data.insights && Array.isArray(data.insights)) {
-          this.saveInsights(data.insights);
-        }
-        if (data.settings && typeof data.settings === 'object') {
-          this.saveSettings(data.settings);
-        }
-        this.showToast('System data successfully restored from backup file.', 'success');
-        this.renderCurrentView();
-      } catch (err) {
-        this.showToast('Failed to parse backup JSON file.', 'error');
-      }
-    };
-    reader.readAsText(file);
-    e.target.value = '';
+    this.showToast('Restore operation is locked under administrative policy.', 'warning');
+    if (e && e.target) e.target.value = '';
   }
 
   // --- DELETE CONFIRMATION MODAL ---
@@ -1636,34 +1549,21 @@ class AdminApp {
         cloudItems.push(Object.assign({ id: docSnap.id }, data));
       });
 
-      if (cloudItems.length > 0) {
-        const localList = this.getInquiries();
-        let newCount = 0;
-        cloudItems.forEach(cloudItem => {
-          const exists = localList.some(l => l.id === cloudItem.id || (l.email === cloudItem.email && l.timestamp === cloudItem.timestamp));
-          if (!exists) {
-            localList.unshift(cloudItem);
-            newCount++;
-          }
-        });
+      // Pure mirror of genuine Cloud Firestore inquiry records
+      cloudItems.sort((a, b) => new Date(b.timestamp || b.createdAt || 0) - new Date(a.timestamp || a.createdAt || 0));
 
-        if (newCount > 0) {
-          this.saveInquiries(localList);
-          this.renderInquiries();
-          this.updateDashboardStats();
-          if (!isSilent) {
-            this.showToast(`Merged ${newCount} new trade leads from Cloud Firestore.`, "success");
-          }
-        } else if (!isSilent) {
-          this.showToast("Inquiries up to date with Cloud Firestore.", "info");
-        }
-      } else if (!isSilent) {
-        this.showToast("Cloud connection verified. Inquiries table up to date.", "info");
+      this.saveInquiries(cloudItems);
+      this.renderInquiries();
+      this.updateDashboardStats();
+      this.renderOverview();
+
+      if (!isSilent) {
+        this.showToast(`Synchronized ${cloudItems.length} live trade leads from Cloud Firestore.`, "success");
       }
     } catch (err) {
       console.warn("[Admin Sync] Firebase notice:", err.message);
       if (!isSilent) {
-        this.showToast(`Cloud Sync note: ${err.message}. Local leads preserved.`, "info");
+        this.showToast(`Cloud Sync note: ${err.message}.`, "info");
       }
     } finally {
       if (syncBtn && !isSilent) {

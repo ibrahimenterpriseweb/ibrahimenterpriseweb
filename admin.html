@@ -56,7 +56,7 @@
       <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 p-8 sm:p-10">
         <!-- Brand Header -->
         <div class="text-center">
-          <div class="inline-block p-2 rounded-xl bg-slate-900/5 mb-3">
+          <div class="inline-block p-3 rounded-2xl bg-white shadow-md border border-slate-100 mb-3">
             <img src="assets/images/logo.png?v=2" alt="Ibrahim Enterprise Logo" class="h-12 w-auto mx-auto object-contain">
           </div>
           <h1 class="text-2xl font-bold text-slate-900">Trade Operations Portal</h1>
@@ -113,8 +113,8 @@
         <!-- Brand Header in Sidebar -->
         <div class="h-20 px-6 flex items-center justify-between border-b border-white/5">
           <a href="index.html" class="flex items-center gap-3">
-            <div class="p-1.5 rounded-lg bg-white/10">
-              <img src="assets/images/logo.png?v=2" alt="Ibrahim Enterprise" class="h-8 w-auto">
+            <div class="p-2 rounded-xl bg-white shadow-sm flex items-center justify-center">
+              <img src="assets/images/logo.png?v=2" alt="Ibrahim Enterprise" class="h-8 w-auto object-contain">
             </div>
             <div>
               <div class="font-bold text-white text-sm tracking-tight">Ibrahim Enterprise</div>
@@ -657,34 +657,48 @@
             </form>
           </div>
 
-          <!-- Data Backup & Maintenance -->
+          <!-- Data Backup & Maintenance (Locked Policy) -->
           <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
             <div>
-              <h3 class="text-base font-bold text-slate-900 mb-2">System Data Management</h3>
-              <p class="text-xs text-slate-500 mb-6">Export full database backup or restore state</p>
+              <div class="flex items-center justify-between mb-2">
+                <h3 class="text-base font-bold text-slate-900">System Data Management</h3>
+                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                  <svg class="w-3 h-3 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                  Admin Locked
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mb-6">Database maintenance & persistence policy</p>
 
               <div class="space-y-4">
-                <div class="p-4 rounded-lg bg-slate-50 border border-slate-100">
-                  <div class="font-bold text-slate-900 text-xs">Complete Site Backup</div>
-                  <div class="text-[11px] text-slate-500 mt-1">Exports all inquiries, custom commodities, insight articles & settings into a single JSON snapshot.</div>
-                  <button onclick="adminApp.downloadFullBackup()" class="w-full mt-3 btn-primary text-xs py-2 justify-center">
-                    Download Full JSON Backup
+                <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-slate-700 text-xs">Complete Site Backup</span>
+                    <span class="text-[10px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Cloud Protected</span>
+                  </div>
+                  <div class="text-[11px] text-slate-500 mt-1">Manual file downloads are locked. Full database state (commodities, articles & trade leads) is securely stored on Google Cloud Firestore.</div>
+                  <button disabled class="w-full mt-3 px-3 py-2 rounded-lg text-xs font-semibold bg-slate-200 text-slate-400 cursor-not-allowed flex items-center justify-center gap-1.5 opacity-75">
+                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    <span>Download JSON Backup (Locked)</span>
                   </button>
                 </div>
 
-                <div class="p-4 rounded-lg bg-slate-50 border border-slate-100">
-                  <div class="font-bold text-slate-900 text-xs">Restore from Backup</div>
-                  <div class="text-[11px] text-slate-500 mt-1">Upload an existing snapshot file to restore all website data.</div>
-                  <input type="file" id="restore-file-input" accept=".json" class="hidden" onchange="adminApp.handleRestoreFile(event)">
-                  <button onclick="adminApp.triggerRestoreFile()" class="w-full mt-3 px-3 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50">
-                    Upload & Restore JSON File
+                <div class="p-4 rounded-lg bg-slate-50 border border-slate-200">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-slate-700 text-xs">Restore from Backup</span>
+                    <span class="text-[10px] font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Restricted</span>
+                  </div>
+                  <div class="text-[11px] text-slate-500 mt-1">Manual JSON restores are locked to prevent accidental overwrites or deletion of active customer quote leads.</div>
+                  <button disabled class="w-full mt-3 px-3 py-2 rounded-lg text-xs font-semibold bg-slate-200 text-slate-400 cursor-not-allowed flex items-center justify-center gap-1.5 opacity-75">
+                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    <span>Upload & Restore (Locked)</span>
                   </button>
                 </div>
               </div>
             </div>
 
-            <div class="mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-400">
-              Session secured via browser encrypted store.
+            <div class="mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-500 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              <span>Automated Google Cloud Firestore persistence active.</span>
             </div>
           </div>
 

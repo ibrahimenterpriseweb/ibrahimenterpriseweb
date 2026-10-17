@@ -3,15 +3,6 @@
  * Handles trade quote submissions, validation, state management, and real-time response.
  */
 
-// Firebase Configuration template (can be injected via environment variables or Cloudflare Pages)
-const firebaseConfig = {
-  apiKey: window.ENV_FIREBASE_API_KEY || "AIzaSyD-ibrahim-enterprise-placeholder-key",
-  authDomain: "ibrahim-enterprise-trade.firebaseapp.com",
-  projectId: "ibrahim-enterprise-trade",
-  storageBucket: "ibrahim-enterprise-trade.appspot.com",
-  messagingSenderId: "1029384756",
-  appId: "1:1029384756:web:abcdef123456"
-};
 
 class InquiryHandler {
   constructor(formId) {

@@ -196,8 +196,8 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <!-- Filter Bar (Populated dynamically with live item counts) -->
-        <div id="category-filter-bar" class="flex flex-wrap items-center gap-2 mb-10 pb-4 border-b border-slate-200">
-          <button data-category="All" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-[#0fa14a] text-white shadow-sm">
+        <div id="category-filter-bar" class="flex items-center gap-2 mb-8 pb-3 border-b border-slate-200 overflow-x-auto flex-nowrap sm:flex-wrap scrollbar-none py-1">
+          <button data-category="All" class="category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-[#0fa14a] text-white shadow-sm flex-shrink-0">
             All Products
           </button>
         </div>
@@ -394,8 +394,8 @@
         const label = isAll ? `All Products (${count})` : `${cat} (${count})`;
         const isActive = cat.toLowerCase() === (activeCategory || 'All').toLowerCase();
 
-        const activeClasses = 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-[#0fa14a] text-white shadow-sm';
-        const inactiveClasses = 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200';
+        const activeClasses = 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-[#0fa14a] text-white shadow-sm flex-shrink-0 whitespace-nowrap';
+        const inactiveClasses = 'category-btn px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all bg-slate-100 text-slate-700 hover:bg-slate-200 flex-shrink-0 whitespace-nowrap';
 
         return `
           <button data-category="${cat}" class="${isActive ? activeClasses : inactiveClasses}">

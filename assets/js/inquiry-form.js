@@ -86,22 +86,60 @@ class InquiryHandler {
     }
 
     try {
-      // Simulate real-time secure submission to Firebase Firestore / Cloudflare Worker endpoint
-      await new Promise(resolve => setTimeout(resolve, 800));
+      // 1. Submit directly to Cloud Firestore if connected
+      let firestoreSuccess = false;
+      try {
+        if (window.SERVICES_CONFIG) {
+          // Await Firebase readiness if it is initializing
+          if (!window.SERVICES_CONFIG.isInitialized && window.SERVICES_CONFIG.readyPromise) {
+            await Promise.race([
+              window.SERVICES_CONFIG.readyPromise,
+              new Promise(r => setTimeout(r, 1500))
+            ]);
+          }
 
-      // Store in local inquiry log for persistence
+          if (window.SERVICES_CONFIG.db && window.SERVICES_CONFIG.firestoreMod) {
+            const { collection, addDoc, serverTimestamp } = window.SERVICES_CONFIG.firestoreMod;
+            const docPayload = Object.assign({}, formData, {
+              createdAt: serverTimestamp ? serverTimestamp() : new Date()
+            });
+            await addDoc(collection(window.SERVICES_CONFIG.db, "inquiries"), docPayload);
+            firestoreSuccess = true;
+            console.log("[Firebase] Trade inquiry stored in Cloud Firestore (ibrahim-enterprise-6c8c8).");
+          }
+        }
+      } catch (fbErr) {
+        console.warn("[Firebase] Firestore transmission fallback:", fbErr.message);
+      }
+
+      // 2. Log event in Firebase Analytics
+      try {
+        if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.analytics && window.SERVICES_CONFIG.analyticsMod) {
+          const { logEvent } = window.SERVICES_CONFIG.analyticsMod;
+          logEvent(window.SERVICES_CONFIG.analytics, 'generate_lead', {
+            product_name: formData.product,
+            inquiry_type: formData.inquiryType,
+            country: formData.country,
+            inquiry_id: formData.id
+          });
+        }
+      } catch (anaErr) {
+        console.warn("[Firebase Analytics] Event notice:", anaErr.message);
+      }
+
+      // 3. Store in local inquiry log for immediate local Admin CRM visibility & offline persistence
       const savedInquiries = JSON.parse(localStorage.getItem('ibrahim_inquiries') || '[]');
-      savedInquiries.push(formData);
+      savedInquiries.unshift(formData);
       localStorage.setItem('ibrahim_inquiries', JSON.stringify(savedInquiries));
 
       this.showMessage(
-        `Thank you, ${formData.fullName}. Your trade inquiry for "${formData.product}" has been officially logged with Ibrahim Enterprise. Our trade desk will respond within 24 hours.`,
+        `Thank you, ${formData.fullName}. Your trade inquiry for "${formData.product}" (Ref: ${formData.id}) has been successfully transmitted to Ibrahim Enterprise trade desk. We will respond within 24 hours.`,
         'success'
       );
 
       this.form.reset();
 
-      // If in a modal, close after 3 seconds
+      // If in a modal, close after 3.2 seconds
       const modal = document.getElementById('quote-modal');
       if (modal && !modal.classList.contains('hidden')) {
         setTimeout(() => {

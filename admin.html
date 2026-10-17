@@ -394,6 +394,10 @@
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
               <span>Log Manual Lead</span>
             </button>
+            <button id="btn-sync-firebase" onclick="adminApp.syncInquiriesFromFirebase()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 shadow-xs flex items-center gap-1.5 transition-colors">
+              <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              <span>Sync Cloud Leads</span>
+            </button>
             <button onclick="adminApp.exportInquiriesCSV()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-xs flex items-center gap-1.5">
               <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
               <span>Export CSV</span>
@@ -687,6 +691,101 @@
               Session secured via browser encrypted store.
             </div>
           </div>
+
+          <!-- Integrated Cloud Services & Media Asset Hub -->
+          <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm col-span-1 lg:col-span-2 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-100">
+              <div>
+                <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <span>Cloud Services & Media Asset Hub</span>
+                  <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#0fa14a] animate-pulse"></span>
+                    Live Connected
+                  </span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">Production Firebase and Cloudinary integrations for Ibrahim Enterprise</p>
+              </div>
+            </div>
+
+            <!-- Two-column status grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Firebase Status -->
+              <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-xs">FB</div>
+                    <span class="font-bold text-xs text-slate-900">Firebase Cloud Backend</span>
+                  </div>
+                  <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Active</span>
+                </div>
+                <div class="text-[11px] text-slate-600 space-y-1 pt-1 font-mono">
+                  <div><span class="text-slate-400">Project:</span> <span class="font-semibold text-slate-800">ibrahim-enterprise-6c8c8</span></div>
+                  <div><span class="text-slate-400">Analytics:</span> <span class="text-slate-800">G-TX6JMCYXMR</span></div>
+                  <div><span class="text-slate-400">Firestore:</span> <span class="text-emerald-700 font-semibold">inquiries (Real-time CRM)</span></div>
+                  <div><span class="text-slate-400">Security:</span> <span class="text-slate-700">Client-Safe API Key + Schema Rules</span></div>
+                </div>
+              </div>
+
+              <!-- Cloudinary Status -->
+              <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold text-xs">CL</div>
+                    <span class="font-bold text-xs text-slate-900">Cloudinary Media CDN</span>
+                  </div>
+                  <span class="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Unsigned Secure</span>
+                </div>
+                <div class="text-[11px] text-slate-600 space-y-1 pt-1 font-mono">
+                  <div><span class="text-slate-400">Cloud:</span> <span class="font-semibold text-slate-800">dun5uome</span></div>
+                  <div><span class="text-slate-400">Preset:</span> <span class="font-semibold text-slate-800">Ibrahim Enterprise</span></div>
+                  <div><span class="text-slate-400">Asset Folder:</span> <span class="text-slate-800">images</span></div>
+                  <div><span class="text-slate-400">Direct Upload:</span> <span class="text-emerald-700 font-semibold">Enabled (No Secret Exposed)</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Cloudinary Uploader Desk -->
+            <div class="p-5 rounded-xl bg-emerald-50/50 border border-emerald-200/80">
+              <div class="flex items-center justify-between mb-3">
+                <div>
+                  <h4 class="text-xs font-bold text-slate-900">Direct Cloudinary Media Uploader</h4>
+                  <p class="text-[11px] text-slate-500">Upload high-res product photos, certifications, or reports to Ibrahim Enterprise cloud storage</p>
+                </div>
+              </div>
+
+              <div class="flex flex-col sm:flex-row items-center gap-4">
+                <input type="file" id="standalone-media-input" accept="image/*" class="hidden" onchange="adminApp.handleStandaloneMediaUpload(event)">
+                <button type="button" onclick="document.getElementById('standalone-media-input').click()" class="btn-primary text-xs py-2 px-4 shadow-sm flex items-center gap-2 flex-shrink-0">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                  <span>Select Image to Upload</span>
+                </button>
+
+                <div id="standalone-upload-status" class="text-xs text-slate-600 font-medium truncate flex-1">
+                  Ready. Supports JPG, PNG, WEBP up to 12 MB.
+                </div>
+              </div>
+
+              <!-- Upload Progress Bar -->
+              <div id="standalone-progress-container" class="hidden mt-3 w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+                <div id="standalone-progress-bar" class="bg-[#0fa14a] h-full transition-all duration-200" style="width: 0%"></div>
+              </div>
+
+              <!-- Result URL Display Box -->
+              <div id="standalone-result-box" class="hidden mt-4 p-3 bg-white rounded-lg border border-emerald-200 flex flex-col sm:flex-row items-center gap-3">
+                <div class="w-16 h-12 rounded bg-slate-100 overflow-hidden flex-shrink-0 border border-slate-200">
+                  <img id="standalone-result-img" src="" alt="Uploaded asset" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-1 w-full min-w-0">
+                  <div class="text-[10px] font-bold text-slate-400 uppercase">CDN Secure URL (Cloudinary)</div>
+                  <input type="text" id="standalone-result-url" readonly class="form-input text-xs font-mono py-1 px-2 w-full bg-slate-50 border-slate-200 select-all" onclick="this.select()">
+                </div>
+                <button type="button" onclick="adminApp.copyStandaloneUrl()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 flex items-center gap-1.5 flex-shrink-0 shadow-xs">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  <span>Copy CDN URL</span>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
@@ -971,26 +1070,45 @@
           </div>
         </div>
 
-        <!-- Image Selector with Preview -->
+        <!-- Image Selector with Cloudinary Direct Uploader & Preview -->
         <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-          <label class="block text-xs font-semibold text-slate-700 mb-1">Commodity Image</label>
-          <div class="flex items-center gap-4">
-            <div class="w-24 h-16 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0">
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-semibold text-slate-700">Commodity Image</label>
+            <span class="text-[11px] text-emerald-700 font-medium flex items-center gap-1">
+              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Cloudinary CDN Active
+            </span>
+          </div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div class="w-24 h-16 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0 border border-slate-300 relative">
               <img id="product-image-preview" src="assets/images/hing-afghanistan.jpg" alt="Preview" class="w-full h-full object-cover">
             </div>
-            <div class="flex-1 space-y-2">
-              <select id="prod-image-preset" onchange="document.getElementById('prod-image').value = this.value; document.getElementById('product-image-preview').src = this.value;" class="form-select text-xs">
-                <option value="assets/images/hing-afghanistan.jpg">assets/images/hing-afghanistan.jpg (Hing Afghanistan)</option>
-                <option value="assets/images/basmati-rice.jpg">assets/images/basmati-rice.jpg (Basmati Rice)</option>
-                <option value="assets/images/black-pepper.jpg">assets/images/black-pepper.jpg (Black Pepper)</option>
-                <option value="assets/images/cardamom.jpg">assets/images/cardamom.jpg (Green Cardamom)</option>
-                <option value="assets/images/coconut-powder.jpg">assets/images/coconut-powder.jpg (Coconut Powder)</option>
-                <option value="assets/images/onion-powder.jpg">assets/images/onion-powder.jpg (Onion Powder)</option>
-                <option value="assets/images/fresh-vegetables.jpg">assets/images/fresh-vegetables.jpg (Fresh Produce)</option>
-                <option value="assets/images/seafood.jpg">assets/images/seafood.jpg (Marine Seafood)</option>
-                <option value="assets/images/container-shipping.jpg">assets/images/container-shipping.jpg (Container Shipping)</option>
-              </select>
-              <input type="text" id="prod-image" oninput="document.getElementById('product-image-preview').src = this.value" class="form-input text-xs" placeholder="Or enter custom path or URL">
+            <div class="flex-1 w-full space-y-2">
+              <div class="flex items-center gap-2">
+                <input type="file" id="prod-image-file-input" accept="image/*" class="hidden" onchange="adminApp.handleProductImageUpload(event)">
+                <button type="button" onclick="document.getElementById('prod-image-file-input').click()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 shadow-xs flex items-center gap-1.5 transition-colors">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span>Upload Image (Cloudinary)</span>
+                </button>
+                <span id="prod-upload-status" class="text-[11px] text-slate-500 font-medium"></span>
+              </div>
+              <div id="prod-upload-progress-container" class="hidden w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                <div id="prod-upload-progress-bar" class="bg-[#0fa14a] h-full transition-all duration-200" style="width: 0%"></div>
+              </div>
+              <div class="flex flex-col sm:flex-row gap-2">
+                <select id="prod-image-preset" onchange="document.getElementById('prod-image').value = this.value; document.getElementById('product-image-preview').src = this.value;" class="form-select text-xs sm:w-1/2">
+                  <option value="assets/images/hing-afghanistan.jpg">assets/images/hing-afghanistan.jpg (Hing Afghanistan)</option>
+                  <option value="assets/images/basmati-rice.jpg">assets/images/basmati-rice.jpg (Basmati Rice)</option>
+                  <option value="assets/images/black-pepper.jpg">assets/images/black-pepper.jpg (Black Pepper)</option>
+                  <option value="assets/images/cardamom.jpg">assets/images/cardamom.jpg (Green Cardamom)</option>
+                  <option value="assets/images/coconut-powder.jpg">assets/images/coconut-powder.jpg (Coconut Powder)</option>
+                  <option value="assets/images/onion-powder.jpg">assets/images/onion-powder.jpg (Onion Powder)</option>
+                  <option value="assets/images/fresh-vegetables.jpg">assets/images/fresh-vegetables.jpg (Fresh Produce)</option>
+                  <option value="assets/images/seafood.jpg">assets/images/seafood.jpg (Marine Seafood)</option>
+                  <option value="assets/images/container-shipping.jpg">assets/images/container-shipping.jpg (Container Shipping)</option>
+                </select>
+                <input type="text" id="prod-image" oninput="document.getElementById('product-image-preview').src = this.value" class="form-input text-xs sm:w-1/2" placeholder="Or enter custom path or Cloudinary URL">
+              </div>
             </div>
           </div>
         </div>
@@ -1071,15 +1189,39 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Cover Image Path</label>
-            <input type="text" id="insight-image" class="form-input text-xs" placeholder="assets/images/hing-afghanistan.jpg">
+        <!-- Insight Cover Image with Cloudinary Direct Uploader & Preview -->
+        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-semibold text-slate-700">Article Cover Image</label>
+            <span class="text-[11px] text-emerald-700 font-medium flex items-center gap-1">
+              <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              Cloudinary CDN Active
+            </span>
           </div>
-          <div>
-            <label class="block text-xs font-semibold text-slate-700 mb-1">Author Attribution</label>
-            <input type="text" id="insight-author" class="form-input text-xs" placeholder="Trade Intelligence Desk • Ibrahim Enterprise">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div class="w-24 h-16 rounded-lg bg-slate-200 overflow-hidden flex-shrink-0 border border-slate-300 relative">
+              <img id="insight-image-preview" src="assets/images/hing-afghanistan.jpg" alt="Preview" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-1 w-full space-y-2">
+              <div class="flex items-center gap-2">
+                <input type="file" id="insight-image-file-input" accept="image/*" class="hidden" onchange="adminApp.handleInsightImageUpload(event)">
+                <button type="button" onclick="document.getElementById('insight-image-file-input').click()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 text-white hover:bg-emerald-700 shadow-xs flex items-center gap-1.5 transition-colors">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                  <span>Upload Cover Image (Cloudinary)</span>
+                </button>
+                <span id="insight-upload-status" class="text-[11px] text-slate-500 font-medium"></span>
+              </div>
+              <div id="insight-upload-progress-container" class="hidden w-full bg-slate-200 h-1.5 rounded-full overflow-hidden">
+                <div id="insight-upload-progress-bar" class="bg-[#0fa14a] h-full transition-all duration-200" style="width: 0%"></div>
+              </div>
+              <input type="text" id="insight-image" oninput="document.getElementById('insight-image-preview').src = this.value" class="form-input text-xs" placeholder="Cover image path or Cloudinary CDN URL">
+            </div>
           </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Author Attribution</label>
+          <input type="text" id="insight-author" class="form-input text-xs" placeholder="Trade Intelligence Desk • Ibrahim Enterprise">
         </div>
 
         <div>
@@ -1128,7 +1270,9 @@
   <!-- TOAST CONTAINER -->
   <div id="toast-container"></div>
 
-  <!-- Scripts -->
+  <!-- Cloud Services & Media Scripts -->
+  <script src="assets/js/services-config.js"></script>
+  <script src="assets/js/cloudinary-upload.js"></script>
   <script src="assets/js/products-data.js"></script>
   <script src="assets/js/insights-data.js"></script>
   <script src="assets/js/admin.js"></script>

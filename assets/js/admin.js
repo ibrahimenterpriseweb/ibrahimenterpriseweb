@@ -268,6 +268,9 @@ class AdminApp {
     this.updateNotificationBadge();
     this.renderCurrentView();
 
+    // Trigger subtle background sync with Cloud Firestore
+    this.syncInquiriesFromFirebase(true);
+
     // Bind logout button
     const logoutBtns = document.querySelectorAll('[data-logout]');
     logoutBtns.forEach(btn => btn.addEventListener('click', () => this.logout()));
@@ -876,6 +879,11 @@ class AdminApp {
     document.getElementById('edit-product-id').value = '';
     document.getElementById('product-image-preview').src = 'assets/images/hing-afghanistan.jpg';
 
+    const statusEl = document.getElementById('prod-upload-status');
+    if (statusEl) statusEl.textContent = '';
+    const prog = document.getElementById('prod-upload-progress-container');
+    if (prog) prog.classList.add('hidden');
+
     // Clear highlights
     this.renderHighlightInputs(['Authentic Origin Sourcing', 'Strict Phyto-sanitary Compliance', 'Export Standard Packaging']);
 
@@ -906,6 +914,11 @@ class AdminApp {
     document.getElementById('prod-description').value = prod.description || '';
     document.getElementById('prod-packaging').value = prod.packaging || '';
     document.getElementById('prod-applications').value = prod.applications || '';
+
+    const statusEl = document.getElementById('prod-upload-status');
+    if (statusEl) statusEl.textContent = '';
+    const prog = document.getElementById('prod-upload-progress-container');
+    if (prog) prog.classList.add('hidden');
 
     // Render highlights
     this.renderHighlightInputs(prod.highlights || ['Premium Sourcing']);
@@ -1073,6 +1086,13 @@ class AdminApp {
     document.getElementById('edit-insight-id').value = '';
     document.getElementById('insight-date').value = 'October 2026';
     document.getElementById('insight-author').value = 'Trade Intelligence Desk • Ibrahim Enterprise';
+    const preview = document.getElementById('insight-image-preview');
+    if (preview) preview.src = 'assets/images/hing-afghanistan.jpg';
+
+    const statusEl = document.getElementById('insight-upload-status');
+    if (statusEl) statusEl.textContent = '';
+    const prog = document.getElementById('insight-upload-progress-container');
+    if (prog) prog.classList.add('hidden');
 
     const modal = document.getElementById('modal-insight-editor');
     if (modal) {
@@ -1094,9 +1114,16 @@ class AdminApp {
     document.getElementById('insight-date').value = item.date || 'October 2026';
     document.getElementById('insight-readtime').value = item.readTime || '4 min read';
     document.getElementById('insight-image').value = item.image || 'assets/images/hing-afghanistan.jpg';
+    const preview = document.getElementById('insight-image-preview');
+    if (preview) preview.src = item.image || 'assets/images/hing-afghanistan.jpg';
     document.getElementById('insight-author').value = item.author || 'Trade Intelligence Desk • Ibrahim Enterprise';
     document.getElementById('insight-excerpt').value = item.excerpt || '';
     document.getElementById('insight-content').value = item.content || '';
+
+    const statusEl = document.getElementById('insight-upload-status');
+    if (statusEl) statusEl.textContent = '';
+    const prog = document.getElementById('insight-upload-progress-container');
+    if (prog) prog.classList.add('hidden');
 
     const modal = document.getElementById('modal-insight-editor');
     if (modal) {
@@ -1360,6 +1387,226 @@ class AdminApp {
       toast.style.transform = 'translateX(20px)';
       setTimeout(() => toast.remove(), 300);
     }, 4000);
+  }
+
+  // =========================================================================
+  // CLOUD SERVICES INTEGRATION: CLOUDINARY & FIREBASE
+  // =========================================================================
+
+  async handleProductImageUpload(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const statusEl = document.getElementById('prod-upload-status');
+    const progContainer = document.getElementById('prod-upload-progress-container');
+    const progBar = document.getElementById('prod-upload-progress-bar');
+    const previewImg = document.getElementById('product-image-preview');
+    const inputUrl = document.getElementById('prod-image');
+
+    if (progContainer) progContainer.classList.remove('hidden');
+    if (progBar) progBar.style.width = '10%';
+    if (statusEl) statusEl.textContent = 'Uploading to Cloudinary...';
+
+    try {
+      if (typeof window.uploadToCloudinary !== 'function') {
+        throw new Error('Cloudinary uploader library not loaded.');
+      }
+
+      const res = await window.uploadToCloudinary(file, {
+        onProgress: (pct) => {
+          if (progBar) progBar.style.width = `${pct}%`;
+          if (statusEl) statusEl.textContent = `Uploading: ${pct}%`;
+        }
+      });
+
+      if (inputUrl) inputUrl.value = res.secure_url;
+      if (previewImg) previewImg.src = res.secure_url;
+      if (statusEl) {
+        statusEl.innerHTML = `<span class="text-emerald-700 font-bold">✓ Uploaded to Cloudinary</span>`;
+      }
+      this.showToast('Commodity image uploaded to Cloudinary successfully.', 'success');
+    } catch (err) {
+      console.error('Upload failed:', err);
+      if (statusEl) statusEl.innerHTML = `<span class="text-red-600 font-bold">Upload failed: ${err.message}</span>`;
+      this.showToast(err.message, 'error');
+    } finally {
+      setTimeout(() => {
+        if (progContainer) progContainer.classList.add('hidden');
+      }, 1500);
+    }
+  }
+
+  async handleInsightImageUpload(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const statusEl = document.getElementById('insight-upload-status');
+    const progContainer = document.getElementById('insight-upload-progress-container');
+    const progBar = document.getElementById('insight-upload-progress-bar');
+    const previewImg = document.getElementById('insight-image-preview');
+    const inputUrl = document.getElementById('insight-image');
+
+    if (progContainer) progContainer.classList.remove('hidden');
+    if (progBar) progBar.style.width = '10%';
+    if (statusEl) statusEl.textContent = 'Uploading cover to Cloudinary...';
+
+    try {
+      if (typeof window.uploadToCloudinary !== 'function') {
+        throw new Error('Cloudinary uploader library not loaded.');
+      }
+
+      const res = await window.uploadToCloudinary(file, {
+        onProgress: (pct) => {
+          if (progBar) progBar.style.width = `${pct}%`;
+          if (statusEl) statusEl.textContent = `Uploading: ${pct}%`;
+        }
+      });
+
+      if (inputUrl) inputUrl.value = res.secure_url;
+      if (previewImg) previewImg.src = res.secure_url;
+      if (statusEl) {
+        statusEl.innerHTML = `<span class="text-emerald-700 font-bold">✓ Uploaded to Cloudinary</span>`;
+      }
+      this.showToast('Insight cover image uploaded to Cloudinary.', 'success');
+    } catch (err) {
+      console.error('Upload failed:', err);
+      if (statusEl) statusEl.innerHTML = `<span class="text-red-600 font-bold">Upload failed: ${err.message}</span>`;
+      this.showToast(err.message, 'error');
+    } finally {
+      setTimeout(() => {
+        if (progContainer) progContainer.classList.add('hidden');
+      }, 1500);
+    }
+  }
+
+  async handleStandaloneMediaUpload(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+
+    const statusEl = document.getElementById('standalone-upload-status');
+    const progContainer = document.getElementById('standalone-progress-container');
+    const progBar = document.getElementById('standalone-progress-bar');
+    const resultBox = document.getElementById('standalone-result-box');
+    const resultImg = document.getElementById('standalone-result-img');
+    const resultUrl = document.getElementById('standalone-result-url');
+
+    if (progContainer) progContainer.classList.remove('hidden');
+    if (progBar) progBar.style.width = '15%';
+    if (statusEl) statusEl.textContent = `Uploading "${file.name}" to Cloudinary (images folder)...`;
+
+    try {
+      if (typeof window.uploadToCloudinary !== 'function') {
+        throw new Error('Cloudinary uploader library not loaded.');
+      }
+
+      const res = await window.uploadToCloudinary(file, {
+        onProgress: (pct) => {
+          if (progBar) progBar.style.width = `${pct}%`;
+          if (statusEl) statusEl.textContent = `Uploading: ${pct}% (${(file.size / 1024).toFixed(0)} KB)`;
+        }
+      });
+
+      if (resultBox) resultBox.classList.remove('hidden');
+      if (resultImg) resultImg.src = res.secure_url;
+      if (resultUrl) resultUrl.value = res.secure_url;
+      if (statusEl) {
+        statusEl.innerHTML = `<span class="text-emerald-700 font-bold">✓ Upload complete! Asset stored in Cloudinary folder: images</span>`;
+      }
+      this.showToast('Asset uploaded to Cloudinary successfully!', 'success');
+    } catch (err) {
+      console.error('Upload failed:', err);
+      if (statusEl) statusEl.innerHTML = `<span class="text-red-600 font-bold">Upload failed: ${err.message}</span>`;
+      this.showToast(err.message, 'error');
+    } finally {
+      setTimeout(() => {
+        if (progContainer) progContainer.classList.add('hidden');
+      }, 1500);
+    }
+  }
+
+  copyStandaloneUrl() {
+    const input = document.getElementById('standalone-result-url');
+    if (!input || !input.value) return;
+    navigator.clipboard.writeText(input.value).then(() => {
+      this.showToast('Cloudinary CDN URL copied to clipboard!', 'success');
+    }).catch(() => {
+      input.select();
+      document.execCommand('copy');
+      this.showToast('CDN URL copied to clipboard!', 'success');
+    });
+  }
+
+  async syncInquiriesFromFirebase(isSilent = false) {
+    const syncBtn = document.getElementById('btn-sync-firebase');
+    const originalHtml = syncBtn ? syncBtn.innerHTML : '';
+    if (syncBtn && !isSilent) {
+      syncBtn.disabled = true;
+      syncBtn.innerHTML = `
+        <svg class="animate-spin -ml-1 mr-1.5 h-4 w-4 text-emerald-700 inline-block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Connecting Cloud...</span>
+      `;
+    }
+
+    try {
+      if (window.SERVICES_CONFIG && window.SERVICES_CONFIG.readyPromise) {
+        await window.SERVICES_CONFIG.readyPromise;
+      }
+
+      if (!window.SERVICES_CONFIG || !window.SERVICES_CONFIG.db || !window.SERVICES_CONFIG.firestoreMod) {
+        if (!isSilent) {
+          this.showToast("Firebase cloud connection offline or initializing. Local database active.", "info");
+        }
+        return;
+      }
+
+      const { collection, getDocs, query } = window.SERVICES_CONFIG.firestoreMod;
+      const q = query(collection(window.SERVICES_CONFIG.db, "inquiries"));
+      const snapshot = await getDocs(q);
+
+      const cloudItems = [];
+      snapshot.forEach(docSnap => {
+        const data = docSnap.data();
+        cloudItems.push(Object.assign({ id: docSnap.id }, data));
+      });
+
+      if (cloudItems.length > 0) {
+        const localList = this.getInquiries();
+        let newCount = 0;
+        cloudItems.forEach(cloudItem => {
+          const exists = localList.some(l => l.id === cloudItem.id || (l.email === cloudItem.email && l.timestamp === cloudItem.timestamp));
+          if (!exists) {
+            localList.unshift(cloudItem);
+            newCount++;
+          }
+        });
+
+        if (newCount > 0) {
+          this.saveInquiries(localList);
+          this.renderInquiries();
+          this.updateDashboardStats();
+          if (!isSilent) {
+            this.showToast(`Merged ${newCount} new trade leads from Cloud Firestore.`, "success");
+          }
+        } else if (!isSilent) {
+          this.showToast("Inquiries up to date with Cloud Firestore.", "info");
+        }
+      } else if (!isSilent) {
+        this.showToast("Cloud connection verified. Inquiries table up to date.", "info");
+      }
+    } catch (err) {
+      console.warn("[Admin Sync] Firebase notice:", err.message);
+      if (!isSilent) {
+        this.showToast(`Cloud Sync note: ${err.message}. Local leads preserved.`, "info");
+      }
+    } finally {
+      if (syncBtn && !isSilent) {
+        syncBtn.disabled = false;
+        syncBtn.innerHTML = originalHtml;
+      }
+    }
   }
 
   escape(str) {

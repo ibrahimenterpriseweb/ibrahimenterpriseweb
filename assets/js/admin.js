@@ -164,6 +164,7 @@ class AdminApp {
             onAuthStateChanged(window.SERVICES_CONFIG.auth, (user) => {
               if (user) {
                 this.currentUser = user;
+                sessionStorage.setItem('ibrahim_admin_logged_in', 'true');
                 console.log("[Firebase Auth] Active authenticated session for:", user.email);
 
                 const emailEl = document.getElementById('admin-user-email');
@@ -177,6 +178,8 @@ class AdminApp {
                 this.syncInquiriesFromFirebase(true);
               } else {
                 this.currentUser = null;
+                sessionStorage.removeItem('ibrahim_admin_logged_in');
+                localStorage.removeItem('ibrahim_admin_remember');
                 console.log("[Firebase Auth] Session unauthenticated.");
                 if (loginSection) loginSection.classList.remove('hidden');
                 if (appSection) appSection.classList.add('hidden');
@@ -267,9 +270,20 @@ class AdminApp {
     } catch (e) {
       console.warn("Auth sign-out notice:", e);
     }
+    this.currentUser = null;
     sessionStorage.removeItem('ibrahim_admin_logged_in');
     localStorage.removeItem('ibrahim_admin_remember');
-    this.showToast('Logged out securely.', 'info');
+
+    // Instantly transition UI back to login screen
+    const loginSection = document.getElementById('login-section');
+    const appSection = document.getElementById('app-section');
+    if (loginSection) loginSection.classList.remove('hidden');
+    if (appSection) appSection.classList.add('hidden');
+
+    const pwdInput = document.getElementById('login-password');
+    if (pwdInput) pwdInput.value = '';
+
+    this.showToast('Logged out securely. Session ended.', 'info');
   }
 
   // --- DASHBOARD INIT ---

@@ -257,7 +257,7 @@ function initFloatingCommsAndChatbot() {
     },
     export: {
       title: "Export Product Portfolio",
-      text: "Our export portfolio includes:\n• Spices: Pure Hing, Tellicherry Black Pepper, Green Cardamom\n• Rice & Food Products: Traditional & 1121 Basmati Rice, Desiccated Coconut Powder (Fine & Medium), Dehydrated White/Red Onion Powder & Flakes\n• Fresh Agricultural Produce: Farm-fresh export vegetables\n• Marine Seafood: Export-grade marine seafood"
+      text: "Our export portfolio includes:\n• Spices & Nuts: Pure Hing, Tellicherry Black Pepper, Green Cardamom, Premium Cashew Nuts\n• Rice & Food Products: Traditional & 1121 Basmati Rice, Desiccated Coconut Powder (Fine & Medium), Dehydrated White/Red Onion Powder & Flakes\n• Fresh Agricultural Produce: Farm-fresh export vegetables\n• Marine Seafood: Export-grade marine seafood"
     },
     volume: {
       title: "Trade Volumes & Capacity",

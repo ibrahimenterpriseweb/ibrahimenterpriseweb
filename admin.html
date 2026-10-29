@@ -391,7 +391,7 @@
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
               <span>Log Manual Lead</span>
             </button>
-            <button id="btn-sync-firebase" onclick="adminApp.syncInquiriesFromFirebase()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 shadow-xs flex items-center gap-1.5 transition-colors">
+            <button id="btn-sync-firebase" onclick="adminApp.syncInquiriesFromFirebase()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 shadow-xs flex items-center gap-1.5 transition-colors" title="Sync live leads from Cloud Firestore">
               <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
               <span>Sync Cloud Leads</span>
             </button>
@@ -454,19 +454,21 @@
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
               <span>Add New Commodity</span>
             </button>
-            <button onclick="adminApp.pushAllLocalToCloud()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 shadow-xs flex items-center gap-1.5 transition-colors">
+            <button id="btn-push-catalog" onclick="adminApp.pushAllLocalToCloud()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-emerald-50 border border-emerald-300 text-emerald-800 hover:bg-emerald-100 shadow-xs flex items-center gap-1.5 transition-colors" title="Publish catalog changes to Live Cloud Firestore">
               <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
               <span>Publish Catalog to Live Server</span>
             </button>
-            <button onclick="adminApp.syncCatalogFromCloud(false)" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-xs flex items-center gap-1.5">
+            <button id="btn-pull-catalog" onclick="adminApp.syncCatalogFromCloud(false)" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-xs flex items-center gap-1.5 transition-colors" title="Pull latest commodities from Cloud Firestore">
               <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
               <span>Pull Live Server</span>
             </button>
-            <button onclick="adminApp.exportProductsJSON()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-xs">
-              Export Products JSON
+            <button onclick="adminApp.exportProductsJSON()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 shadow-xs flex items-center gap-1.5 transition-colors" title="Export products catalog as JSON">
+              <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Export Products JSON</span>
             </button>
-            <button onclick="adminApp.resetProductsToDefault()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-red-50 text-red-700 hover:bg-red-100 transition-colors">
-              Reset to Defaults
+            <button onclick="adminApp.resetProductsToDefault()" class="px-3.5 py-2 rounded-lg text-xs font-semibold bg-red-50 border border-red-200 text-red-700 hover:bg-red-100 transition-colors flex items-center gap-1.5" title="Reset catalog to official defaults">
+              <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+              <span>Reset to Defaults</span>
             </button>
           </div>
         </div>
@@ -976,6 +978,7 @@
               <option value="Basmati Rice">Basmati Rice (India)</option>
               <option value="Black Pepper">Black Pepper</option>
               <option value="Green Cardamom">Green Cardamom</option>
+              <option value="Cashew Nuts">Premium Cashew Nuts (Kernels)</option>
               <option value="Desiccated Coconut Powder">Desiccated Coconut Powder</option>
               <option value="Dehydrated Onion Powder & Flakes">Dehydrated Onion Powder & Flakes</option>
               <option value="Fresh Agricultural Produce & Vegetables">Fresh Agricultural Produce</option>
@@ -1120,6 +1123,7 @@
                   <option value="assets/images/basmati-rice.jpg">assets/images/basmati-rice.jpg (Basmati Rice)</option>
                   <option value="assets/images/black-pepper.jpg">assets/images/black-pepper.jpg (Black Pepper)</option>
                   <option value="assets/images/cardamom.jpg">assets/images/cardamom.jpg (Green Cardamom)</option>
+                  <option value="assets/images/cashew-nuts.jpg">assets/images/cashew-nuts.jpg (Cashew Nuts)</option>
                   <option value="assets/images/coconut-powder.jpg">assets/images/coconut-powder.jpg (Coconut Powder)</option>
                   <option value="assets/images/onion-powder.jpg">assets/images/onion-powder.jpg (Onion Powder)</option>
                   <option value="assets/images/fresh-vegetables.jpg">assets/images/fresh-vegetables.jpg (Fresh Produce)</option>

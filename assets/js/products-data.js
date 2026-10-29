@@ -71,7 +71,7 @@ const DEFAULT_PRODUCTS = [
     ],
     packaging: "25kg or 50kg multi-ply paper bags or high-density poly woven export bags with inner liner.",
     applications: "Industrial spice milling, meat and savory processing, extracts, and gourmet food retail.",
-    relatedSlugs: ["cardamom", "hing-asafoetida", "onion-powder"]
+    relatedSlugs: ["cardamom", "cashew-nuts", "hing-asafoetida"]
   },
   {
     id: "cardamom",
@@ -94,7 +94,30 @@ const DEFAULT_PRODUCTS = [
     ],
     packaging: "5kg and 10kg aroma-sealed cartons with vacuum food-grade inner foil pouches, or master cartons.",
     applications: "Traditional Arabic gahwa coffee, confectionery, bakery, spice seasonings, and herbal infusions.",
-    relatedSlugs: ["black-pepper", "hing-asafoetida", "basmati-rice"]
+    relatedSlugs: ["black-pepper", "cashew-nuts", "hing-asafoetida"]
+  },
+  {
+    id: "cashew-nuts",
+    slug: "cashew-nuts",
+    name: "Premium Cashew Nuts (Kernels)",
+    category: "Spices",
+    tradeType: "Export",
+    tagline: "Export-grade whole white cashew kernels (W180, W210, W240, W320)",
+    origin: "India",
+    reportedVolume: "FCL Container Consignments across Global Markets",
+    image: "assets/images/cashew-nuts.jpg",
+    shortDesc: "Carefully graded, crisp whole white cashew nut kernels with naturally sweet buttery crunch, packed for export.",
+    description: "Sourced from India's premier cashew processing belts, Ibrahim Enterprise exports export-quality cashew kernels processed under rigorous food-safety protocols. Carefully steam-shelled, dried, peeled, and graded according to international CEPC and AFI standards, our cashew kernels deliver consistent ivory appearance, low moisture, and superior crunch. Available across whole white grades (W180 King size, W210 Jumbo, W240 Large, and W320 standard) as well as split and broken grades for food manufacturers, nut roasters, confectionery houses, and retail packaging brands worldwide.",
+    highlights: [
+      "Graded Whole White Cashew Kernels (W180, W210, W240, W320)",
+      "High Protein, Healthy Unsaturated Fats & Naturally Sweet Flavor",
+      "Low Moisture Content (<5%) for Extended Freshness & Crispness",
+      "Vacuum-Sealed Nitrogen-Flushed Tin & Flexi-Pouch Packaging",
+      "Strict Traceability & Microbiological Purity Standards"
+    ],
+    packaging: "Export tins of 10kg or 11.34kg (25 lbs) vacuum-packed with CO2/N2 flushing (2 tins per master carton = 50 lbs / 22.68kg), or 25lb/50lb multi-barrier flexible pouches in corrugated cartons.",
+    applications: "Gourmet snack roasting, salted/flavored nuts packaging, chocolate & confectionery manufacturing, bakery, traditional sweets, culinary sauces, and premium nut-milk formulations.",
+    relatedSlugs: ["cardamom", "black-pepper", "basmati-rice"]
   },
   {
     id: "coconut-powder",
@@ -196,6 +219,16 @@ function getStoredProducts() {
     if (raw) {
       const parsed = JSON.parse(raw);
       if (Array.isArray(parsed) && parsed.length > 0) {
+        let updated = false;
+        DEFAULT_PRODUCTS.forEach(dp => {
+          if (!parsed.some(p => p.id === dp.id || p.slug === dp.slug)) {
+            parsed.push(dp);
+            updated = true;
+          }
+        });
+        if (updated) {
+          localStorage.setItem('ibrahim_custom_products', JSON.stringify(parsed));
+        }
         return parsed;
       }
     }

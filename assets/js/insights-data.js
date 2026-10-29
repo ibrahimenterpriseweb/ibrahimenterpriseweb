@@ -104,7 +104,7 @@ const DEFAULT_INSIGHTS = [
 
       <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">Planned Bonded Warehouse Advantages</h3>
       <p class="text-slate-600 leading-relaxed mb-4">
-        Ibrahim Enterprise' strategic roadmap includes a planned dedicated bonded warehouse in Dubai. By maintaining buffer inventories of non-perishable commodities such as Basmati rice, green cardamom, pepper, and Afghanistan Hing, trade turnarounds to European, Gulf, and North American clients can be shortened by several weeks compared to direct source origin transit.
+        Ibrahim Enterprise' strategic roadmap includes a planned dedicated bonded warehouse in Dubai. By maintaining buffer inventories of non-perishable commodities such as Basmati rice, green cardamom, pepper, cashew kernels, and Afghanistan Hing, trade turnarounds to European, Gulf, and North American clients can be shortened by several weeks compared to direct source origin transit.
       </p>
 
       <h3 class="text-xl font-bold text-slate-900 mt-8 mb-3">Transparent Operational Status</h3>
